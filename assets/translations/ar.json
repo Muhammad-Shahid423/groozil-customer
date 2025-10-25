@@ -1,0 +1,91 @@
+{
+  "common": {
+    "app_name": "جروزيل",
+    "welcome": "مرحباً",
+    "loading": "جار التحميل...",
+    "error": "خطأ",
+    "success": "نجح",
+    "ok": "موافق",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "yes": "نعم",
+    "no": "لا",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "done": "تم",
+    "next": "التالي",
+    "back": "رجوع",
+    "skip": "تخطي",
+    "search": "بحث",
+    "filter": "تصفية",
+    "sort": "ترتيب",
+    "apply": "تطبيق",
+    "clear": "مسح",
+    "retry": "إعادة المحاولة",
+    "refresh": "تحديث"
+  },
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "invalid_email": "يرجى إدخال بريد إلكتروني صحيح",
+    "invalid_phone": "يرجى إدخال رقم هاتف صحيح"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "signup": "إنشاء حساب",
+    "logout": "تسجيل الخروج",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "password": "كلمة المرور",
+    "confirm_password": "تأكيد كلمة المرور",
+    "forgot_password": "نسيت كلمة المرور؟",
+    "remember_me": "تذكرني",
+    "dont_have_account": "ليس لديك حساب؟",
+    "already_have_account": "لديك حساب بالفعل؟",
+    "or_continue_with": "أو المتابعة باستخدام",
+    "google": "جوجل",
+    "apple": "أبل"
+  },
+  "home": {
+    "title": "الرئيسية",
+    "categories": "الفئات",
+    "featured_products": "منتجات مميزة",
+    "special_offers": "عروض خاصة",
+    "view_all": "عرض الكل"
+  },
+  "products": {
+    "title": "المنتجات",
+    "add_to_cart": "أضف إلى السلة",
+    "out_of_stock": "نفذ من المخزون",
+    "price": "السعر",
+    "description": "الوصف",
+    "reviews": "التقييمات",
+    "rating": "التقييم"
+  },
+  "cart": {
+    "title": "السلة",
+    "empty": "سلتك فارغة",
+    "subtotal": "المجموع الفرعي",
+    "total": "الإجمالي",
+    "checkout": "الدفع",
+    "remove": "إزالة"
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "my_orders": "طلباتي",
+    "wishlist": "المفضلة",
+    "addresses": "العناوين",
+    "settings": "الإعدادات",
+    "help": "المساعدة والدعم"
+  },
+  "errors": {
+    "no_internet": "لا يوجد اتصال بالإنترنت",
+    "server_error": "حدث خطأ في الخادم",
+    "unknown_error": "حدث خطأ غير معروف",
+    "try_again": "يرجى المحاولة مرة أخرى"
+  },
+  "splash": {
+    "title": "Groozil",
+    "subtitle": "تم توصيل احتياجاتك اليومية الأساسية"
+  }
+}

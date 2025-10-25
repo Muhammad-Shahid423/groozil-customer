@@ -1,0 +1,87 @@
+// DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
+
+// ignore_for_file: constant_identifier_names
+
+abstract class  LocaleKeys {
+  static const common_app_name = 'common.app_name';
+  static const common_welcome = 'common.welcome';
+  static const common_loading = 'common.loading';
+  static const common_error = 'common.error';
+  static const common_success = 'common.success';
+  static const common_ok = 'common.ok';
+  static const common_cancel = 'common.cancel';
+  static const common_confirm = 'common.confirm';
+  static const common_yes = 'common.yes';
+  static const common_no = 'common.no';
+  static const common_save = 'common.save';
+  static const common_delete = 'common.delete';
+  static const common_edit = 'common.edit';
+  static const common_done = 'common.done';
+  static const common_next = 'common.next';
+  static const common_back = 'common.back';
+  static const common_skip = 'common.skip';
+  static const common_search = 'common.search';
+  static const common_filter = 'common.filter';
+  static const common_sort = 'common.sort';
+  static const common_apply = 'common.apply';
+  static const common_clear = 'common.clear';
+  static const common_retry = 'common.retry';
+  static const common_refresh = 'common.refresh';
+  static const common = 'common';
+  static const validation_required = 'validation.required';
+  static const validation_invalid_email = 'validation.invalid_email';
+  static const validation_invalid_phone = 'validation.invalid_phone';
+  static const validation = 'validation';
+  static const auth_login = 'auth.login';
+  static const auth_signup = 'auth.signup';
+  static const auth_logout = 'auth.logout';
+  static const auth_email = 'auth.email';
+  static const auth_phone = 'auth.phone';
+  static const auth_password = 'auth.password';
+  static const auth_confirm_password = 'auth.confirm_password';
+  static const auth_forgot_password = 'auth.forgot_password';
+  static const auth_remember_me = 'auth.remember_me';
+  static const auth_dont_have_account = 'auth.dont_have_account';
+  static const auth_already_have_account = 'auth.already_have_account';
+  static const auth_or_continue_with = 'auth.or_continue_with';
+  static const auth_google = 'auth.google';
+  static const auth_apple = 'auth.apple';
+  static const auth = 'auth';
+  static const home_title = 'home.title';
+  static const home_categories = 'home.categories';
+  static const home_featured_products = 'home.featured_products';
+  static const home_special_offers = 'home.special_offers';
+  static const home_view_all = 'home.view_all';
+  static const home = 'home';
+  static const products_title = 'products.title';
+  static const products_add_to_cart = 'products.add_to_cart';
+  static const products_out_of_stock = 'products.out_of_stock';
+  static const products_price = 'products.price';
+  static const products_description = 'products.description';
+  static const products_reviews = 'products.reviews';
+  static const products_rating = 'products.rating';
+  static const products = 'products';
+  static const cart_title = 'cart.title';
+  static const cart_empty = 'cart.empty';
+  static const cart_subtotal = 'cart.subtotal';
+  static const cart_total = 'cart.total';
+  static const cart_checkout = 'cart.checkout';
+  static const cart_remove = 'cart.remove';
+  static const cart = 'cart';
+  static const profile_title = 'profile.title';
+  static const profile_my_orders = 'profile.my_orders';
+  static const profile_wishlist = 'profile.wishlist';
+  static const profile_addresses = 'profile.addresses';
+  static const profile_settings = 'profile.settings';
+  static const profile_help = 'profile.help';
+  static const profile = 'profile';
+  static const errors_no_internet = 'errors.no_internet';
+  static const errors_server_error = 'errors.server_error';
+  static const errors_unknown_error = 'errors.unknown_error';
+  static const errors_try_again = 'errors.try_again';
+  static const errors = 'errors';
+  static const splash_title = 'splash.title';
+  static const splash_subtitle = 'splash.subtitle';
+  static const splash = 'splash';
+
+}
