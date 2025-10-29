@@ -23,7 +23,7 @@ class AppConstants {
   // Validation
   static const int minPasswordLength = 8;
   static const int maxPasswordLength = 20;
-  static const int phoneNumberLength = 10;
+  static const int phoneNumberLength = 9;
 
   // Map
   static const double defaultLatitude = 26.4207;

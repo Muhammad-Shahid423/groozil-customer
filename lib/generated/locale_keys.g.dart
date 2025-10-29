@@ -17,6 +17,7 @@ abstract class  LocaleKeys {
   static const common_delete = 'common.delete';
   static const common_edit = 'common.edit';
   static const common_done = 'common.done';
+  static const common_get_started = 'common.get_started';
   static const common_next = 'common.next';
   static const common_back = 'common.back';
   static const common_skip = 'common.skip';
@@ -27,6 +28,7 @@ abstract class  LocaleKeys {
   static const common_clear = 'common.clear';
   static const common_retry = 'common.retry';
   static const common_refresh = 'common.refresh';
+  static const common_continue = 'common.continue';
   static const common = 'common';
   static const validation_required = 'validation.required';
   static const validation_invalid_email = 'validation.invalid_email';
@@ -36,7 +38,9 @@ abstract class  LocaleKeys {
   static const auth_signup = 'auth.signup';
   static const auth_logout = 'auth.logout';
   static const auth_email = 'auth.email';
+  static const auth_enter_your_email = 'auth.enter_your_email';
   static const auth_phone = 'auth.phone';
+  static const auth_enter_your_phone_number = 'auth.enter_your_phone_number';
   static const auth_password = 'auth.password';
   static const auth_confirm_password = 'auth.confirm_password';
   static const auth_forgot_password = 'auth.forgot_password';
@@ -46,6 +50,35 @@ abstract class  LocaleKeys {
   static const auth_or_continue_with = 'auth.or_continue_with';
   static const auth_google = 'auth.google';
   static const auth_apple = 'auth.apple';
+  static const auth_continue_with_phone = 'auth.continue_with_phone';
+  static const auth_continue_with_email = 'auth.continue_with_email';
+  static const auth_continue_with_google = 'auth.continue_with_google';
+  static const auth_continue_with_apple = 'auth.continue_with_apple';
+  static const auth_we_will_send_code = 'auth.we_will_send_code';
+  static const auth_verify_otp = 'auth.verify_otp';
+  static const auth_enter_verification_code = 'auth.enter_verification_code';
+  static const auth_we_sent_code_to = 'auth.we_sent_code_to';
+  static const auth_resend_code_in = 'auth.resend_code_in';
+  static const auth_resend_otp = 'auth.resend_otp';
+  static const auth_verify = 'auth.verify';
+  static const auth_otp_sent_successfully = 'auth.otp_sent_successfully';
+  static const auth_email_login = 'auth.email_login';
+  static const auth_welcome_back = 'auth.welcome_back';
+  static const auth_sign_in_to_continue = 'auth.sign_in_to_continue';
+  static const auth_email_placeholder = 'auth.email_placeholder';
+  static const auth_sign_in = 'auth.sign_in';
+  static const auth_sign_up = 'auth.sign_up';
+  static const auth_email_not_implemented = 'auth.email_not_implemented';
+  static const auth_or = 'auth.or';
+  static const auth_phone_login = 'auth.phone_login';
+  static const auth_enter_phone_number = 'auth.enter_phone_number';
+  static const auth_complete_profile = 'auth.complete_profile';
+  static const auth_first_name = 'auth.first_name';
+  static const auth_last_name = 'auth.last_name';
+  static const auth_enter_first_name = 'auth.enter_first_name';
+  static const auth_enter_last_name = 'auth.enter_last_name';
+  static const auth_almost_there = 'auth.almost_there';
+  static const auth_complete_profile_description = 'auth.complete_profile_description';
   static const auth = 'auth';
   static const home_title = 'home.title';
   static const home_categories = 'home.categories';
@@ -83,5 +116,15 @@ abstract class  LocaleKeys {
   static const splash_title = 'splash.title';
   static const splash_subtitle = 'splash.subtitle';
   static const splash = 'splash';
+  static const onboarding_onboarding_1_title = 'onboarding.onboarding_1_title';
+  static const onboarding_onboarding_1_subtitle = 'onboarding.onboarding_1_subtitle';
+  static const onboarding_onboarding_1_description = 'onboarding.onboarding_1_description';
+  static const onboarding_onboarding_2_title = 'onboarding.onboarding_2_title';
+  static const onboarding_onboarding_2_subtitle = 'onboarding.onboarding_2_subtitle';
+  static const onboarding_onboarding_2_description = 'onboarding.onboarding_2_description';
+  static const onboarding_onboarding_3_title = 'onboarding.onboarding_3_title';
+  static const onboarding_onboarding_3_subtitle = 'onboarding.onboarding_3_subtitle';
+  static const onboarding_onboarding_3_description = 'onboarding.onboarding_3_description';
+  static const onboarding = 'onboarding';
 
 }

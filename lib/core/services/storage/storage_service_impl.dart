@@ -5,26 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 @LazySingleton(as: StorageService)
 class StorageServiceImpl implements StorageService {
-
-  // factory StorageServiceImpl({
-  //   required SharedPreferences sharedPreferences,
-  //   required FlutterSecureStorage secureStorage,
-  // }) {
-  //   _instance ??= StorageServiceImpl._internal(
-  //     sharedPreferences,
-  //     secureStorage,
-  //   );
-  //   return _instance!;
-  // }
-  //
-  // StorageServiceImpl._internal(this._sharedPreferences, this._secureStorage);
   StorageServiceImpl(this._sharedPreferences, this._secureStorage);
 
   final SharedPreferences _sharedPreferences;
   final FlutterSecureStorage _secureStorage;
-
-  // Singleton pattern
-  static StorageServiceImpl? _instance;
 
   // Keys
   static const String _accessTokenKey = 'access_token';

@@ -17,10 +17,8 @@ class ApiConstants {
   static const String appleAuth = '/auth/apple';
 
   // User Endpoints
-  static const String profile = '/user/profile';
-  static const String updateProfile = '/user/profile';
-  static const String uploadAvatar = '/user/profile/avatar';
-  static const String changePassword = '/user/change-password';
+  static const String profile = '/users/me';
+  static const String updateLanguage = '/users/me/language';
   static const String deleteAccount = '/user/account';
 
   // Products Endpoints

@@ -31,11 +31,11 @@ class Validators {
 
     // Saudi phone numbers start with 05 and have 10 digits
     if (cleanPhone.length != AppConstants.phoneNumberLength) {
-      return 'Phone number must be 10 digits';
+      return 'Phone number must be 9 digits';
     }
 
-    if (!cleanPhone.startsWith('05')) {
-      return 'Phone number must start with 05';
+    if (!cleanPhone.startsWith('5')) {
+      return 'Phone number must start with 5';
     }
 
     return null;

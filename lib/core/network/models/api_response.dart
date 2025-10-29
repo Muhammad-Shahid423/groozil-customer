@@ -6,11 +6,12 @@ part 'api_response.g.dart';
 @Freezed(genericArgumentFactories: true)
 abstract class ApiResponse<T> with _$ApiResponse<T> {
   const factory ApiResponse({
-    required bool success,
-    required int statusCode,
-    required String message,
-    required String timestamp,
-    required String path,
+    bool? success,
+    int? statusCode,
+    String? message,
+    String? error,
+    String? timestamp,
+    String? path,
     T? data,
     Map<String, dynamic>? pagination,
     List<String>? errors,
@@ -26,10 +27,10 @@ abstract class ApiResponse<T> with _$ApiResponse<T> {
 @freezed
 abstract class PaginationMeta with _$PaginationMeta {
   const factory PaginationMeta({
-    required int page,
-    required int limit,
-    required int total,
-    required int totalPages,
+    @Default(0) int page,
+    @Default(0) int limit,
+    @Default(0) int total,
+    @Default(0) int totalPages,
     bool? hasNextPage,
     bool? hasPreviousPage,
   }) = _PaginationMeta;

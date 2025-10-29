@@ -13,13 +13,25 @@ class ErrorInterceptor extends Interceptor {
       final statusCode = response.statusCode ?? 0;
       final data = response.data;
 
-      // Extract error message
+      // Extract error message with priority: message > errors array > error field
       var message = 'An error occurred';
       List<String>? errors;
 
       if (data is Map<String, dynamic>) {
+        // Get message field
         message = data['message'] as String? ?? message;
-        errors = (data['errors'] as List<dynamic>?)?.cast<String>();
+        
+        // Get errors array for validation errors
+        final errorsData = data['errors'];
+        if (errorsData is List) {
+          errors = errorsData.cast<String>();
+        }
+        
+        // If no message but has errors array, use that
+        if ((data['message'] == null || (data['message'] as String).isEmpty) && 
+            errors != null && errors.isNotEmpty) {
+          message = errors.join(', ');
+        }
       }
 
       debugPrint('🔴 Error Interceptor - Status: $statusCode, Message: $message');
@@ -32,7 +44,9 @@ class ErrorInterceptor extends Interceptor {
 
       switch (statusCode) {
         case 400:
-          customException = ValidationException(message);
+          customException = ValidationException(
+            errors?.isNotEmpty ?? false ? errors!.join(', ') : message,
+          );
         case 401:
           customException = AuthException(message);
         case 403:

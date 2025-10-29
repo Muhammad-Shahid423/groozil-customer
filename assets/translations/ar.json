@@ -14,6 +14,7 @@
     "delete": "حذف",
     "edit": "تعديل",
     "done": "تم",
+    "get_started": "ابدأ",
     "next": "التالي",
     "back": "رجوع",
     "skip": "تخطي",
@@ -23,7 +24,8 @@
     "apply": "تطبيق",
     "clear": "مسح",
     "retry": "إعادة المحاولة",
-    "refresh": "تحديث"
+    "refresh": "تحديث",
+    "continue": "يكمل"
   },
   "validation": {
     "required": "هذا الحقل مطلوب",
@@ -35,7 +37,9 @@
     "signup": "إنشاء حساب",
     "logout": "تسجيل الخروج",
     "email": "البريد الإلكتروني",
+    "enter_your_email": "أدخل بريدك الإلكتروني",
     "phone": "رقم الهاتف",
+    "enter_your_phone_number": "أدخل رقم هاتفك",
     "password": "كلمة المرور",
     "confirm_password": "تأكيد كلمة المرور",
     "forgot_password": "نسيت كلمة المرور؟",
@@ -44,7 +48,36 @@
     "already_have_account": "لديك حساب بالفعل؟",
     "or_continue_with": "أو المتابعة باستخدام",
     "google": "جوجل",
-    "apple": "أبل"
+    "apple": "أبل",
+    "continue_with_phone": "تواصل مع الهاتف",
+    "continue_with_email": "تواصل مع البريد الإلكتروني",
+    "continue_with_google": "تواصل مع جوجل",
+    "continue_with_apple": "تواصل مع أبل",
+    "we_will_send_code": "سوف نرسل لك رمز التحقق",
+    "verify_otp": "تحقق من رمز OTP",
+    "enter_verification_code": "أدخل رمز التحقق",
+    "we_sent_code_to": "لقد أرسلنا رمزًا إلى",
+    "resend_code_in": "إعادة إرسال الرمز خلال {seconds} ثانية",
+    "resend_otp": "إعادة إرسال الرمز",
+    "verify": "تحقق",
+    "otp_sent_successfully": "تم إرسال الرمز بنجاح",
+    "email_login": "تسجيل الدخول بالبريد الإلكتروني",
+    "welcome_back": "مرحباً بعودتك",
+    "sign_in_to_continue": "سجل الدخول للمتابعة",
+    "email_placeholder": "بريدك.الإلكتروني@مثال.com",
+    "sign_in": "تسجيل الدخول",
+    "sign_up": "إنشاء حساب",
+    "email_not_implemented": "تسجيل الدخول بالبريد الإلكتروني غير متاح حالياً",
+    "or": "أو",
+    "phone_login": "تسجيل الدخول بالهاتف",
+    "enter_phone_number": "أدخل رقم الهاتف",
+    "complete_profile": "إكمال الملف الشخصي",
+    "first_name": "الاسم الأول",
+    "last_name": "اسم العائلة",
+    "enter_first_name": "أدخل اسمك الأول",
+    "enter_last_name": "أدخل اسم عائلتك",
+    "almost_there": "أوشكت على الانتهاء!",
+    "complete_profile_description": "دعنا نكمل ملفك الشخصي للبدء"
   },
   "home": {
     "title": "الرئيسية",
@@ -87,5 +120,18 @@
   "splash": {
     "title": "Groozil",
     "subtitle": "تم توصيل احتياجاتك اليومية الأساسية"
+  },
+  "onboarding": {
+    "onboarding_1_title": "تخطَّ المشاوير",
+    "onboarding_1_subtitle": "احصل على مشترياتك في دقائق",
+    "onboarding_1_description": "اطلب ما تحتاجه من المتاجر الموثوقة وسيصل إلى باب منزلك بسرعة.",
+
+    "onboarding_2_title": "تسوّق بذكاء",
+    "onboarding_2_subtitle": "اكتشف أفضل العروض",
+    "onboarding_2_description": "اعثر على كل ما تحتاجه من الضروريات اليومية إلى منتجاتك المفضلة — في تطبيق واحد.",
+
+    "onboarding_3_title": "ابقَ على اطلاع",
+    "onboarding_3_subtitle": "تابع طلباتك لحظة بلحظة",
+    "onboarding_3_description": "من الدفع حتى التوصيل، راقب كل خطوة من خلال التحديثات والإشعارات المباشرة."
   }
 }

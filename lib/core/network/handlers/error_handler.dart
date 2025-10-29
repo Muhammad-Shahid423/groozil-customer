@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:groozil_app/core/errors/exceptions.dart';
 import 'package:groozil_app/core/errors/failures.dart';
+import 'package:groozil_app/core/utils/app_logger.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
@@ -62,30 +63,26 @@ class ErrorHandler {
     }
   }
 
-  Failure _handleResponseError(Response? response) {
+  Failure _handleResponseError(Response<dynamic>? response) {
     if (response == null) {
       return const ServerFailure('No response from server');
     }
 
     final statusCode = response.statusCode ?? 0;
-    final data = response.data;
 
-    var message = 'An error occurred';
-    if (data is Map<String, dynamic>) {
-      message = data['message'] as String? ?? message;
-    }
+    final message = _extractErrorMessage(response);
 
     switch (statusCode) {
       case 400:
-        return ValidationFailure(message);
+        return ValidationFailure(message ?? 'Validation error');
       case 401:
-        return AuthFailure(message);
+        return AuthFailure(message ?? 'Unauthorized');
       case 403:
         return const AuthFailure('Access forbidden');
       case 404:
         return const ServerFailure('Resource not found');
       case 422:
-        return ValidationFailure(message);
+        return ValidationFailure(message ?? 'Unprocessable entity');
       case 429:
         return const ServerFailure('Too many requests. Please try again later.');
       case 500:
@@ -95,7 +92,39 @@ class ErrorHandler {
       case 503:
         return const ServerFailure('Service unavailable');
       default:
-        return ServerFailure(message);
+        return ServerFailure(message ?? 'Unknown error occurred');
     }
+  }
+
+  static String? _extractErrorMessage(Response<dynamic>? response) {
+    try {
+      if (response == null) return null;
+      
+      final data = response.data;
+      if (data is Map<String, dynamic>) {
+        // Priority: message > errors array > error field
+        final message = data['message']?.toString();
+        if (message != null && message.isNotEmpty) {
+          return message;
+        }
+        
+        // Check for errors array (validation errors)
+        final errors = data['errors'];
+        if (errors is List && errors.isNotEmpty) {
+          return errors.join(', ');
+        }
+        
+        // Fallback to error field
+        final error = data['error']?.toString();
+        if (error != null && error.isNotEmpty) {
+          return error;
+        }
+      } else if (data is String) {
+        return data;
+      }
+    } on Exception catch (e) {
+      AppLogger.error('Error extracting message', error: e);
+    }
+    return null;
   }
 }

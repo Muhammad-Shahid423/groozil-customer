@@ -19,6 +19,7 @@ class AppSizes {
   static double get radiusL => 16.r;
   static double get radiusXL => 20.r;
   static double get radiusXXL => 24.r;
+  static double get radiusBottomSheet => 40.r;
   static double get radiusCircle => 999.r;
 
   // Icon Sizes
