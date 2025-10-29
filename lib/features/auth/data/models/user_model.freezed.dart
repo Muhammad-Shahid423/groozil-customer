@@ -218,13 +218,13 @@ return $default(_that.id,_that.role,_that.status,_that.language,_that.phone,_tha
 @JsonSerializable()
 
 class _UserModel implements UserModel {
-  const _UserModel({required this.id, required this.role, required this.status, required this.language, this.phone, this.email, this.name, this.isGuest = false, this.createdAt, this.updatedAt});
+  const _UserModel({required this.id, this.role = 'user', this.status = '', this.language = 'en', this.phone, this.email, this.name, this.isGuest = false, this.createdAt, this.updatedAt});
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String id;
-@override final  String role;
-@override final  String status;
-@override final  String language;
+@override@JsonKey() final  String role;
+@override@JsonKey() final  String status;
+@override@JsonKey() final  String language;
 @override final  String? phone;
 @override final  String? email;
 @override final  String? name;

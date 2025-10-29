@@ -6,7 +6,7 @@ class NavigationService {
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   static BuildContext get context => navigatorKey.currentContext!;
 
-  static void goToLogin() => context.go(RouteNames.phoneInput);
+  static void goToAuthOptions() => context.go(RouteNames.authOptions);
   static void goToHome() => context.go(RouteNames.home);
 
   static void goTo(String route, {Object? extra}) => context.go(route, extra: extra);

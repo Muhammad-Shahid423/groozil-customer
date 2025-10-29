@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:groozil_app/core/network/api_constants.dart';
 import 'package:groozil_app/core/network/models/api_response.dart';
 import 'package:groozil_app/features/auth/data/models/auth_response_model.dart';
+import 'package:groozil_app/features/auth/data/models/user_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api_client.g.dart';
@@ -25,30 +24,23 @@ abstract class ApiClient {
 
   // @POST('/auth/refresh')
   // Future<ApiResponse<Map<String, dynamic>>> refreshToken(@Body() Map<String, dynamic> body);
-  //
-  // @POST('/auth/logout')
-  // Future<ApiResponse<dynamic>> logout();
-  //
-  // @POST('/auth/google')
-  // Future<ApiResponse<Map<String, dynamic>>> googleAuth(@Body() Map<String, dynamic> body);
-  //
-  // @POST('/auth/apple')
-  // Future<ApiResponse<Map<String, dynamic>>> appleAuth(@Body() Map<String, dynamic> body);
-  //
-  // // ==================== USER ENDPOINTS ====================
-  // @GET('/user/profile')
-  // Future<ApiResponse<Map<String, dynamic>>> getProfile();
-  //
-  // @PUT('/user/profile')
-  // Future<ApiResponse<Map<String, dynamic>>> updateProfile(@Body() Map<String, dynamic> body);
-  //
-  // @POST('/user/profile/avatar')
-  // @MultiPart()
-  // Future<ApiResponse<Map<String, dynamic>>> uploadAvatar(@Part(name: 'avatar') File file);
-  //
-  // @PUT('/user/change-password')
-  // Future<ApiResponse<dynamic>> changePassword(@Body() Map<String, dynamic> body);
-  //
+
+  @POST(ApiConstants.logout)
+  Future<ApiResponse<dynamic>> logout();
+
+  @POST(ApiConstants.googleAuth)
+  Future<ApiResponse<AuthResponseModel>> googleAuth(@Body() Map<String, dynamic> body);
+
+  @POST(ApiConstants.appleAuth)
+  Future<ApiResponse<AuthResponseModel>> appleAuth(@Body() Map<String, dynamic> body);
+ 
+  // ==================== USER ENDPOINTS ====================
+  @GET(ApiConstants.profile)
+  Future<ApiResponse<UserModel>> getProfile();
+
+  @PUT(ApiConstants.profile)
+  Future<ApiResponse<AuthResponseModel>> updateProfile(@Body() Map<String, dynamic> body);
+
   // @DELETE('/user/account')
   // Future<ApiResponse<dynamic>> deleteAccount();
   //

@@ -7,7 +7,9 @@ class RouteNames {
 
   // Auth (Phase 2)
   static const String onboarding = '/onboarding';
+  static const String authOptions = '/auth-options';
   static const String phoneInput = '/auth/phone';
+  static const String emailInput = '/auth/email';
   static const String otpVerification = '/auth/otp';
   static const String profileSetup = '/auth/profile-setup';
 

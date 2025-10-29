@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:groozil_app/core/constants/app_constants.dart';
 import 'package:groozil_app/core/network/api_constants.dart';
+import 'package:groozil_app/core/network/handlers/response_handler.dart';
 import 'package:groozil_app/core/routing/navigation_service.dart';
 import 'package:groozil_app/core/services/storage/storage_service.dart';
 import 'package:injectable/injectable.dart';
@@ -9,9 +10,10 @@ import 'package:injectable/injectable.dart';
 @lazySingleton
 class AuthInterceptor extends Interceptor {
 
-  AuthInterceptor(this._storageService);
+  AuthInterceptor(this._storageService, this._responseHandler);
 
   final StorageService _storageService;
+  final ResponseHandler _responseHandler;
 
   @override
   Future<void> onRequest(
@@ -34,12 +36,28 @@ class AuthInterceptor extends Interceptor {
   }
 
   @override
+  Future<void> onResponse(
+    Response<dynamic> response,
+    ResponseInterceptorHandler handler,
+  ) async {
+    await _responseHandler.handleResponse(response, handler);
+  }
+
+  @override
   Future<void> onError(
       DioException err,
       ErrorInterceptorHandler handler,
       ) async {
     // Handle 401 Unauthorized - Token expired
     if (err.response?.statusCode == 401) {
+      final requestPath = err.requestOptions.path;
+      
+      // Don't auto-redirect for OTP verification or initial auth endpoints
+      // Let the UI handle these errors with proper feedback
+      if (_isAuthRelatedEndpoint(requestPath)) {
+        return handler.next(err);
+      }
+
       final refreshToken = _storageService.getRefreshToken();
 
       if (refreshToken != null && refreshToken.isNotEmpty) {
@@ -56,7 +74,7 @@ class AuthInterceptor extends Interceptor {
           requestOptions.headers['Authorization'] = 'Bearer $newToken';
 
           try {
-            final response = await Dio().fetch(requestOptions);
+            final response = await Dio().fetch<dynamic>(requestOptions);
             return handler.resolve(response);
           } on DioException catch (e) {
             debugPrint('🔴 Retry request failed: $e');
@@ -66,7 +84,7 @@ class AuthInterceptor extends Interceptor {
 
       // If refresh fails, clear tokens and redirect to login
       await _clearAuthData();
-      NavigationService.goToLogin();
+      NavigationService.goToAuthOptions();
     }
 
     return handler.next(err);
@@ -78,7 +96,7 @@ class AuthInterceptor extends Interceptor {
         BaseOptions(baseUrl: ApiConstants.apiBaseUrl),
       );
 
-      final response = await dio.post(
+      final response = await dio.post<dynamic>(
         '/auth/refresh',
         data: {'refreshToken': refreshToken},
       );
@@ -104,5 +122,19 @@ class AuthInterceptor extends Interceptor {
 
   Future<void> _clearAuthData() async {
     await _storageService.clearAll();
+  }
+
+  /// Checks if the endpoint is related to authentication flow
+  /// where we shouldn't auto-redirect on 401 errors
+  bool _isAuthRelatedEndpoint(String path) {
+    const authEndpoints = [
+      ApiConstants.sendOtp,
+      ApiConstants.verifyOtp,
+      ApiConstants.googleAuth,
+      ApiConstants.appleAuth,
+      ApiConstants.refreshToken,
+    ];
+    
+    return authEndpoints.any((endpoint) => path.contains(endpoint));
   }
 }

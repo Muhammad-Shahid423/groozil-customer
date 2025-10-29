@@ -120,6 +120,7 @@ class AppColors {
   // BACKGROUND COLORS
   // ============================================
   static const Color background = Color(0xFFFFFFFF);
+  static const Color backgroundCream = Color(0xFFF5E6D3);
   static const Color backgroundGray = Color(0xFFF5F5F5);
   static const Color surface = Color(0xFFFFFFFF);
   static const Color card = Color(0xFFFFFFFF);

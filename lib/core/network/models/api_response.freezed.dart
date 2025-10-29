@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ApiResponse<T> {
 
- bool get success; int get statusCode; String get message; String get timestamp; String get path; T? get data; Map<String, dynamic>? get pagination; List<String>? get errors;
+ bool? get success; int? get statusCode; String? get message; String? get error; String? get timestamp; String? get path; T? get data; Map<String, dynamic>? get pagination; List<String>? get errors;
 /// Create a copy of ApiResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ApiResponseCopyWith<T, ApiResponse<T>> get copyWith => _$ApiResponseCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ApiResponse<T>&&(identical(other.success, success) || other.success == success)&&(identical(other.statusCode, statusCode) || other.statusCode == statusCode)&&(identical(other.message, message) || other.message == message)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.path, path) || other.path == path)&&const DeepCollectionEquality().equals(other.data, data)&&const DeepCollectionEquality().equals(other.pagination, pagination)&&const DeepCollectionEquality().equals(other.errors, errors));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ApiResponse<T>&&(identical(other.success, success) || other.success == success)&&(identical(other.statusCode, statusCode) || other.statusCode == statusCode)&&(identical(other.message, message) || other.message == message)&&(identical(other.error, error) || other.error == error)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.path, path) || other.path == path)&&const DeepCollectionEquality().equals(other.data, data)&&const DeepCollectionEquality().equals(other.pagination, pagination)&&const DeepCollectionEquality().equals(other.errors, errors));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,success,statusCode,message,timestamp,path,const DeepCollectionEquality().hash(data),const DeepCollectionEquality().hash(pagination),const DeepCollectionEquality().hash(errors));
+int get hashCode => Object.hash(runtimeType,success,statusCode,message,error,timestamp,path,const DeepCollectionEquality().hash(data),const DeepCollectionEquality().hash(pagination),const DeepCollectionEquality().hash(errors));
 
 @override
 String toString() {
-  return 'ApiResponse<$T>(success: $success, statusCode: $statusCode, message: $message, timestamp: $timestamp, path: $path, data: $data, pagination: $pagination, errors: $errors)';
+  return 'ApiResponse<$T>(success: $success, statusCode: $statusCode, message: $message, error: $error, timestamp: $timestamp, path: $path, data: $data, pagination: $pagination, errors: $errors)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ApiResponseCopyWith<T,$Res>  {
   factory $ApiResponseCopyWith(ApiResponse<T> value, $Res Function(ApiResponse<T>) _then) = _$ApiResponseCopyWithImpl;
 @useResult
 $Res call({
- bool success, int statusCode, String message, String timestamp, String path, T? data, Map<String, dynamic>? pagination, List<String>? errors
+ bool? success, int? statusCode, String? message, String? error, String? timestamp, String? path, T? data, Map<String, dynamic>? pagination, List<String>? errors
 });
 
 
@@ -65,14 +65,15 @@ class _$ApiResponseCopyWithImpl<T,$Res>
 
 /// Create a copy of ApiResponse
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? success = null,Object? statusCode = null,Object? message = null,Object? timestamp = null,Object? path = null,Object? data = freezed,Object? pagination = freezed,Object? errors = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? success = freezed,Object? statusCode = freezed,Object? message = freezed,Object? error = freezed,Object? timestamp = freezed,Object? path = freezed,Object? data = freezed,Object? pagination = freezed,Object? errors = freezed,}) {
   return _then(_self.copyWith(
-success: null == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
-as bool,statusCode: null == statusCode ? _self.statusCode : statusCode // ignore: cast_nullable_to_non_nullable
-as int,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
-as String,path: null == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
-as String,data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+success: freezed == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
+as bool?,statusCode: freezed == statusCode ? _self.statusCode : statusCode // ignore: cast_nullable_to_non_nullable
+as int?,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as String?,timestamp: freezed == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
+as String?,path: freezed == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
+as String?,data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
 as T?,pagination: freezed == pagination ? _self.pagination : pagination // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>?,errors: freezed == errors ? _self.errors : errors // ignore: cast_nullable_to_non_nullable
 as List<String>?,
@@ -160,10 +161,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool success,  int statusCode,  String message,  String timestamp,  String path,  T? data,  Map<String, dynamic>? pagination,  List<String>? errors)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool? success,  int? statusCode,  String? message,  String? error,  String? timestamp,  String? path,  T? data,  Map<String, dynamic>? pagination,  List<String>? errors)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ApiResponse() when $default != null:
-return $default(_that.success,_that.statusCode,_that.message,_that.timestamp,_that.path,_that.data,_that.pagination,_that.errors);case _:
+return $default(_that.success,_that.statusCode,_that.message,_that.error,_that.timestamp,_that.path,_that.data,_that.pagination,_that.errors);case _:
   return orElse();
 
 }
@@ -181,10 +182,10 @@ return $default(_that.success,_that.statusCode,_that.message,_that.timestamp,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool success,  int statusCode,  String message,  String timestamp,  String path,  T? data,  Map<String, dynamic>? pagination,  List<String>? errors)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool? success,  int? statusCode,  String? message,  String? error,  String? timestamp,  String? path,  T? data,  Map<String, dynamic>? pagination,  List<String>? errors)  $default,) {final _that = this;
 switch (_that) {
 case _ApiResponse():
-return $default(_that.success,_that.statusCode,_that.message,_that.timestamp,_that.path,_that.data,_that.pagination,_that.errors);case _:
+return $default(_that.success,_that.statusCode,_that.message,_that.error,_that.timestamp,_that.path,_that.data,_that.pagination,_that.errors);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +202,10 @@ return $default(_that.success,_that.statusCode,_that.message,_that.timestamp,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool success,  int statusCode,  String message,  String timestamp,  String path,  T? data,  Map<String, dynamic>? pagination,  List<String>? errors)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool? success,  int? statusCode,  String? message,  String? error,  String? timestamp,  String? path,  T? data,  Map<String, dynamic>? pagination,  List<String>? errors)?  $default,) {final _that = this;
 switch (_that) {
 case _ApiResponse() when $default != null:
-return $default(_that.success,_that.statusCode,_that.message,_that.timestamp,_that.path,_that.data,_that.pagination,_that.errors);case _:
+return $default(_that.success,_that.statusCode,_that.message,_that.error,_that.timestamp,_that.path,_that.data,_that.pagination,_that.errors);case _:
   return null;
 
 }
@@ -216,14 +217,15 @@ return $default(_that.success,_that.statusCode,_that.message,_that.timestamp,_th
 @JsonSerializable(genericArgumentFactories: true)
 
 class _ApiResponse<T> implements ApiResponse<T> {
-  const _ApiResponse({required this.success, required this.statusCode, required this.message, required this.timestamp, required this.path, this.data, final  Map<String, dynamic>? pagination, final  List<String>? errors}): _pagination = pagination,_errors = errors;
+  const _ApiResponse({this.success, this.statusCode, this.message, this.error, this.timestamp, this.path, this.data, final  Map<String, dynamic>? pagination, final  List<String>? errors}): _pagination = pagination,_errors = errors;
   factory _ApiResponse.fromJson(Map<String, dynamic> json,T Function(Object?) fromJsonT) => _$ApiResponseFromJson(json,fromJsonT);
 
-@override final  bool success;
-@override final  int statusCode;
-@override final  String message;
-@override final  String timestamp;
-@override final  String path;
+@override final  bool? success;
+@override final  int? statusCode;
+@override final  String? message;
+@override final  String? error;
+@override final  String? timestamp;
+@override final  String? path;
 @override final  T? data;
  final  Map<String, dynamic>? _pagination;
 @override Map<String, dynamic>? get pagination {
@@ -257,16 +259,16 @@ Map<String, dynamic> toJson(Object? Function(T) toJsonT) {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ApiResponse<T>&&(identical(other.success, success) || other.success == success)&&(identical(other.statusCode, statusCode) || other.statusCode == statusCode)&&(identical(other.message, message) || other.message == message)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.path, path) || other.path == path)&&const DeepCollectionEquality().equals(other.data, data)&&const DeepCollectionEquality().equals(other._pagination, _pagination)&&const DeepCollectionEquality().equals(other._errors, _errors));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ApiResponse<T>&&(identical(other.success, success) || other.success == success)&&(identical(other.statusCode, statusCode) || other.statusCode == statusCode)&&(identical(other.message, message) || other.message == message)&&(identical(other.error, error) || other.error == error)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.path, path) || other.path == path)&&const DeepCollectionEquality().equals(other.data, data)&&const DeepCollectionEquality().equals(other._pagination, _pagination)&&const DeepCollectionEquality().equals(other._errors, _errors));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,success,statusCode,message,timestamp,path,const DeepCollectionEquality().hash(data),const DeepCollectionEquality().hash(_pagination),const DeepCollectionEquality().hash(_errors));
+int get hashCode => Object.hash(runtimeType,success,statusCode,message,error,timestamp,path,const DeepCollectionEquality().hash(data),const DeepCollectionEquality().hash(_pagination),const DeepCollectionEquality().hash(_errors));
 
 @override
 String toString() {
-  return 'ApiResponse<$T>(success: $success, statusCode: $statusCode, message: $message, timestamp: $timestamp, path: $path, data: $data, pagination: $pagination, errors: $errors)';
+  return 'ApiResponse<$T>(success: $success, statusCode: $statusCode, message: $message, error: $error, timestamp: $timestamp, path: $path, data: $data, pagination: $pagination, errors: $errors)';
 }
 
 
@@ -277,7 +279,7 @@ abstract mixin class _$ApiResponseCopyWith<T,$Res> implements $ApiResponseCopyWi
   factory _$ApiResponseCopyWith(_ApiResponse<T> value, $Res Function(_ApiResponse<T>) _then) = __$ApiResponseCopyWithImpl;
 @override @useResult
 $Res call({
- bool success, int statusCode, String message, String timestamp, String path, T? data, Map<String, dynamic>? pagination, List<String>? errors
+ bool? success, int? statusCode, String? message, String? error, String? timestamp, String? path, T? data, Map<String, dynamic>? pagination, List<String>? errors
 });
 
 
@@ -294,14 +296,15 @@ class __$ApiResponseCopyWithImpl<T,$Res>
 
 /// Create a copy of ApiResponse
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? success = null,Object? statusCode = null,Object? message = null,Object? timestamp = null,Object? path = null,Object? data = freezed,Object? pagination = freezed,Object? errors = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? success = freezed,Object? statusCode = freezed,Object? message = freezed,Object? error = freezed,Object? timestamp = freezed,Object? path = freezed,Object? data = freezed,Object? pagination = freezed,Object? errors = freezed,}) {
   return _then(_ApiResponse<T>(
-success: null == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
-as bool,statusCode: null == statusCode ? _self.statusCode : statusCode // ignore: cast_nullable_to_non_nullable
-as int,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String,timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
-as String,path: null == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
-as String,data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+success: freezed == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
+as bool?,statusCode: freezed == statusCode ? _self.statusCode : statusCode // ignore: cast_nullable_to_non_nullable
+as int?,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as String?,timestamp: freezed == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
+as String?,path: freezed == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
+as String?,data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
 as T?,pagination: freezed == pagination ? _self._pagination : pagination // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>?,errors: freezed == errors ? _self._errors : errors // ignore: cast_nullable_to_non_nullable
 as List<String>?,
@@ -514,13 +517,13 @@ return $default(_that.page,_that.limit,_that.total,_that.totalPages,_that.hasNex
 @JsonSerializable()
 
 class _PaginationMeta implements PaginationMeta {
-  const _PaginationMeta({required this.page, required this.limit, required this.total, required this.totalPages, this.hasNextPage, this.hasPreviousPage});
+  const _PaginationMeta({this.page = 0, this.limit = 0, this.total = 0, this.totalPages = 0, this.hasNextPage, this.hasPreviousPage});
   factory _PaginationMeta.fromJson(Map<String, dynamic> json) => _$PaginationMetaFromJson(json);
 
-@override final  int page;
-@override final  int limit;
-@override final  int total;
-@override final  int totalPages;
+@override@JsonKey() final  int page;
+@override@JsonKey() final  int limit;
+@override@JsonKey() final  int total;
+@override@JsonKey() final  int totalPages;
 @override final  bool? hasNextPage;
 @override final  bool? hasPreviousPage;
 

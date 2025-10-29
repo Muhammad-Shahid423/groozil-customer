@@ -10,11 +10,13 @@ class ShimmerLoading extends StatelessWidget {
     this.width,
     this.height,
     this.borderRadius,
+    this.isCircle = false,
   });
 
   final double? width;
   final double? height;
   final double? borderRadius;
+  final bool isCircle;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,10 @@ class ShimmerLoading extends StatelessWidget {
         height: height,
         decoration: BoxDecoration(
           color: AppColors.shimmerBase,
-          borderRadius: BorderRadius.circular(
+          shape: isCircle ? BoxShape.circle : BoxShape.rectangle,
+          borderRadius: isCircle
+              ? null
+              : BorderRadius.circular(
             borderRadius ?? AppSizes.radiusM,
           ),
         ),
