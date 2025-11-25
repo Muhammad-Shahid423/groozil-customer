@@ -115,6 +115,7 @@ class AppColors {
   static const Color textDisabled = typography100;
   static const Color textOnPrimary = Color(0xFFFFFFFF);
   static const Color textOnSecondary = typography500;
+  static const Color textDark = Color(0xFF2D3648);
 
   // ============================================
   // BACKGROUND COLORS

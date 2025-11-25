@@ -16,13 +16,22 @@ class RouteNames {
   // Main
   static const String home = '/home';
   static const String categories = '/categories';
+  static const String shop = '/shop';
   static const String search = '/search';
+  static const String orderHistory = '/cart';
   static const String cart = '/cart';
   static const String profile = '/profile';
 
   // Products (Phase 3)
-  static const String productDetails = '/product/:id';
+  static const String productDetails = '/product-details';
   static const String productReviews = '/product/:id/reviews';
+  static const String wishlist = '/wishlist';
+
+  // Address
+  static const String addresses = '/addresses';
+  static const String addAddress = '/add-address';
+  static const String editAddress = '/edit-address';
+  static const String selectLocation = '/select-location';
 
   // Orders (Phase 4)
   static const String checkout = '/checkout';

@@ -8,7 +8,7 @@ class AppLogger {
   );
 
   static void debug(dynamic message, {dynamic error, StackTrace? stackTrace}) {
-    _logger.d(message, error: error, stackTrace: stackTrace);
+    // _logger.d(message, error: error, stackTrace: stackTrace);
   }
 
   static void info(dynamic message, {dynamic error, StackTrace? stackTrace}) {

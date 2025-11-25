@@ -40,9 +40,9 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, AuthResponse>> verifyOtp({
+    required String otp,
     String? phone,
     String? email,
-    required String otp,
   }) async {
     if (!await _networkInfo.isConnected) {
       return const Left(NetworkFailure());
@@ -114,7 +114,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, AuthResponse>> updateProfile({
+  Future<Either<Failure, User>> updateProfile({
     required String name,
     String? phone,
     String? email,
@@ -125,20 +125,15 @@ class AuthRepositoryImpl implements AuthRepository {
 
     return _requestHandler.handle(
           () async {
-        final authResponseModel = await _remoteDataSource.updateProfile(
+        final userModel = await _remoteDataSource.updateProfile(
           name: name,
           phone: phone,
           email: email,
         );
 
-        await _localDataSource.saveTokens(
-          authResponseModel.accessToken,
-          authResponseModel.refreshToken,
-        );
+        await _localDataSource.saveUser(userModel);
 
-        await _localDataSource.saveUser(authResponseModel.user);
-
-        return authResponseModel.toEntity();
+        return userModel.toEntity();
       },
     );
   }

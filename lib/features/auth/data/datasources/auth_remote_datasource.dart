@@ -1,5 +1,6 @@
 import 'package:groozil_app/core/network/client/api_client.dart';
 import 'package:groozil_app/features/auth/data/models/auth_response_model.dart';
+import 'package:groozil_app/features/auth/data/models/user_model.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class AuthRemoteDataSource {
@@ -7,7 +8,7 @@ abstract class AuthRemoteDataSource {
   Future<AuthResponseModel> verifyOtp({String? phone, String? email, required String otp});
   Future<AuthResponseModel> googleSignIn(String idToken);
   Future<AuthResponseModel> appleSignIn(String idToken);
-  Future<AuthResponseModel> updateProfile({required String name, String? phone, String? email});
+  Future<UserModel> updateProfile({required String name, String? phone, String? email});
   Future<void> logout();
 }
 
@@ -68,7 +69,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<AuthResponseModel> updateProfile({
+  Future<UserModel> updateProfile({
     required String name,
     String? phone,
     String? email,

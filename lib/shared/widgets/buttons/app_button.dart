@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:groozil_app/core/constants/assets_constants.dart';
 import 'package:groozil_app/core/extensions/context_extensions.dart';
 import 'package:groozil_app/core/extensions/spacing_extensions.dart';
@@ -29,6 +30,8 @@ class AppButton extends StatelessWidget {
     required VoidCallback? onPressed,
     bool isLoading = false,
     bool isDisabled = false,
+    String? preFix,
+    TextStyle? textStyle,
   }) {
     return AppButton(
       label: label,
@@ -37,7 +40,8 @@ class AppButton extends StatelessWidget {
       isDisabled: isDisabled,
       backgroundColor: AppColors.primary500,
       borderColor: Colors.transparent,
-      textStyle: AppTextStyles.light.bold14_17?.copyWith(color: Colors.white),
+      textStyle: textStyle ?? AppTextStyles.light.bold14_17?.copyWith(color: Colors.white),
+      preFix: preFix,
     );
   }
 
@@ -146,10 +150,10 @@ class AppButton extends StatelessWidget {
           ),
         ),
         child: isBusy
-            ? const SizedBox(
-          height: 20,
-          width: 20,
-          child: CircularProgressIndicator(
+            ? SizedBox(
+          height: 20.h,
+          width: 20.w,
+          child: const CircularProgressIndicator(
             strokeWidth: 2,
             valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
           ),
@@ -163,6 +167,7 @@ class AppButton extends StatelessWidget {
                 path: preFix!,
                 height: 20,
                 width: 20,
+                colorFilter: ColorFilter.mode(resolvedTextColor, BlendMode.srcIn),
               ),
               8.wBox,
             ],

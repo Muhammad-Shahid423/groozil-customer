@@ -14,6 +14,8 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   phone: json['phone'] as String?,
   email: json['email'] as String?,
   name: json['name'] as String?,
+  googleId: json['googleId'] as String?,
+  appleId: json['appleId'] as String?,
   isGuest: json['isGuest'] as bool? ?? false,
   createdAt: json['createdAt'] == null
       ? null
@@ -32,6 +34,8 @@ Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
       'phone': instance.phone,
       'email': instance.email,
       'name': instance.name,
+      'googleId': instance.googleId,
+      'appleId': instance.appleId,
       'isGuest': instance.isGuest,
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),

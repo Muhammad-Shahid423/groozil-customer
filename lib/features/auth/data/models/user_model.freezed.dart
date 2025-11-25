@@ -15,7 +15,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
- String get id; String get role; String get status; String get language; String? get phone; String? get email; String? get name; bool get isGuest; DateTime? get createdAt; DateTime? get updatedAt;
+ String get id; String get role; String get status; String get language; String? get phone; String? get email; String? get name; String? get googleId; String? get appleId; bool get isGuest;// @Default(<dynamic>[]) List<dynamic> addresses,
+ DateTime? get createdAt; DateTime? get updatedAt;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +29,16 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.role, role) || other.role == role)&&(identical(other.status, status) || other.status == status)&&(identical(other.language, language) || other.language == language)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.isGuest, isGuest) || other.isGuest == isGuest)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.role, role) || other.role == role)&&(identical(other.status, status) || other.status == status)&&(identical(other.language, language) || other.language == language)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.googleId, googleId) || other.googleId == googleId)&&(identical(other.appleId, appleId) || other.appleId == appleId)&&(identical(other.isGuest, isGuest) || other.isGuest == isGuest)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,role,status,language,phone,email,name,isGuest,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,role,status,language,phone,email,name,googleId,appleId,isGuest,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, role: $role, status: $status, language: $language, phone: $phone, email: $email, name: $name, isGuest: $isGuest, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'UserModel(id: $id, role: $role, status: $status, language: $language, phone: $phone, email: $email, name: $name, googleId: $googleId, appleId: $appleId, isGuest: $isGuest, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -48,7 +49,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String role, String status, String language, String? phone, String? email, String? name, bool isGuest, DateTime? createdAt, DateTime? updatedAt
+ String id, String role, String status, String language, String? phone, String? email, String? name, String? googleId, String? appleId, bool isGuest, DateTime? createdAt, DateTime? updatedAt
 });
 
 
@@ -65,7 +66,7 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? role = null,Object? status = null,Object? language = null,Object? phone = freezed,Object? email = freezed,Object? name = freezed,Object? isGuest = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? role = null,Object? status = null,Object? language = null,Object? phone = freezed,Object? email = freezed,Object? name = freezed,Object? googleId = freezed,Object? appleId = freezed,Object? isGuest = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
@@ -74,6 +75,8 @@ as String,language: null == language ? _self.language : language // ignore: cast
 as String,phone: freezed == phone ? _self.phone : phone // ignore: cast_nullable_to_non_nullable
 as String?,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String?,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String?,googleId: freezed == googleId ? _self.googleId : googleId // ignore: cast_nullable_to_non_nullable
+as String?,appleId: freezed == appleId ? _self.appleId : appleId // ignore: cast_nullable_to_non_nullable
 as String?,isGuest: null == isGuest ? _self.isGuest : isGuest // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -162,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String role,  String status,  String language,  String? phone,  String? email,  String? name,  bool isGuest,  DateTime? createdAt,  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String role,  String status,  String language,  String? phone,  String? email,  String? name,  String? googleId,  String? appleId,  bool isGuest,  DateTime? createdAt,  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.role,_that.status,_that.language,_that.phone,_that.email,_that.name,_that.isGuest,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.role,_that.status,_that.language,_that.phone,_that.email,_that.name,_that.googleId,_that.appleId,_that.isGuest,_that.createdAt,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -183,10 +186,10 @@ return $default(_that.id,_that.role,_that.status,_that.language,_that.phone,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String role,  String status,  String language,  String? phone,  String? email,  String? name,  bool isGuest,  DateTime? createdAt,  DateTime? updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String role,  String status,  String language,  String? phone,  String? email,  String? name,  String? googleId,  String? appleId,  bool isGuest,  DateTime? createdAt,  DateTime? updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
-return $default(_that.id,_that.role,_that.status,_that.language,_that.phone,_that.email,_that.name,_that.isGuest,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.role,_that.status,_that.language,_that.phone,_that.email,_that.name,_that.googleId,_that.appleId,_that.isGuest,_that.createdAt,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,10 +206,10 @@ return $default(_that.id,_that.role,_that.status,_that.language,_that.phone,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String role,  String status,  String language,  String? phone,  String? email,  String? name,  bool isGuest,  DateTime? createdAt,  DateTime? updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String role,  String status,  String language,  String? phone,  String? email,  String? name,  String? googleId,  String? appleId,  bool isGuest,  DateTime? createdAt,  DateTime? updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.id,_that.role,_that.status,_that.language,_that.phone,_that.email,_that.name,_that.isGuest,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.role,_that.status,_that.language,_that.phone,_that.email,_that.name,_that.googleId,_that.appleId,_that.isGuest,_that.createdAt,_that.updatedAt);case _:
   return null;
 
 }
@@ -218,7 +221,7 @@ return $default(_that.id,_that.role,_that.status,_that.language,_that.phone,_tha
 @JsonSerializable()
 
 class _UserModel implements UserModel {
-  const _UserModel({required this.id, this.role = 'user', this.status = '', this.language = 'en', this.phone, this.email, this.name, this.isGuest = false, this.createdAt, this.updatedAt});
+  const _UserModel({required this.id, this.role = 'user', this.status = '', this.language = 'en', this.phone, this.email, this.name, this.googleId, this.appleId, this.isGuest = false, this.createdAt, this.updatedAt});
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String id;
@@ -228,7 +231,10 @@ class _UserModel implements UserModel {
 @override final  String? phone;
 @override final  String? email;
 @override final  String? name;
+@override final  String? googleId;
+@override final  String? appleId;
 @override@JsonKey() final  bool isGuest;
+// @Default(<dynamic>[]) List<dynamic> addresses,
 @override final  DateTime? createdAt;
 @override final  DateTime? updatedAt;
 
@@ -245,16 +251,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.role, role) || other.role == role)&&(identical(other.status, status) || other.status == status)&&(identical(other.language, language) || other.language == language)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.isGuest, isGuest) || other.isGuest == isGuest)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.id, id) || other.id == id)&&(identical(other.role, role) || other.role == role)&&(identical(other.status, status) || other.status == status)&&(identical(other.language, language) || other.language == language)&&(identical(other.phone, phone) || other.phone == phone)&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.googleId, googleId) || other.googleId == googleId)&&(identical(other.appleId, appleId) || other.appleId == appleId)&&(identical(other.isGuest, isGuest) || other.isGuest == isGuest)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,role,status,language,phone,email,name,isGuest,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,role,status,language,phone,email,name,googleId,appleId,isGuest,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'UserModel(id: $id, role: $role, status: $status, language: $language, phone: $phone, email: $email, name: $name, isGuest: $isGuest, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'UserModel(id: $id, role: $role, status: $status, language: $language, phone: $phone, email: $email, name: $name, googleId: $googleId, appleId: $appleId, isGuest: $isGuest, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -265,7 +271,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String role, String status, String language, String? phone, String? email, String? name, bool isGuest, DateTime? createdAt, DateTime? updatedAt
+ String id, String role, String status, String language, String? phone, String? email, String? name, String? googleId, String? appleId, bool isGuest, DateTime? createdAt, DateTime? updatedAt
 });
 
 
@@ -282,7 +288,7 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? role = null,Object? status = null,Object? language = null,Object? phone = freezed,Object? email = freezed,Object? name = freezed,Object? isGuest = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? role = null,Object? status = null,Object? language = null,Object? phone = freezed,Object? email = freezed,Object? name = freezed,Object? googleId = freezed,Object? appleId = freezed,Object? isGuest = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_UserModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
@@ -291,6 +297,8 @@ as String,language: null == language ? _self.language : language // ignore: cast
 as String,phone: freezed == phone ? _self.phone : phone // ignore: cast_nullable_to_non_nullable
 as String?,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String?,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String?,googleId: freezed == googleId ? _self.googleId : googleId // ignore: cast_nullable_to_non_nullable
+as String?,appleId: freezed == appleId ? _self.appleId : appleId // ignore: cast_nullable_to_non_nullable
 as String?,isGuest: null == isGuest ? _self.isGuest : isGuest // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable

@@ -3,6 +3,7 @@ class AssetsConstants {
   static const String icons = 'assets/icons';
   static const String fonts = 'assets/fonts';
   static const String svgs = 'assets/svgs';
+  static const String animations = 'assets/animations';
 
   /// Images
   static const String appBackground = '$images/app_bg.jpg';
@@ -12,6 +13,7 @@ class AssetsConstants {
   static const String onBoard2 = '$images/onboard_2.png';
   static const String onBoard3 = '$images/onboard_3.png';
   static const String onBoard4 = '$images/onboard_4.png';
+  static const String banana = '$images/banana.png';
 
   /// Icons
   static const String appIcon = '$icons/app_icon.png';
@@ -21,6 +23,8 @@ class AssetsConstants {
   static const String apple = '$svgs/apple.svg';
   static const String caretBack = '$svgs/caret-back.svg';
   static const String cart = '$svgs/cart.svg';
+  static const String caretForward = '$svgs/caret-forward.svg';
+  static const String edit = '$svgs/edit.svg';
   static const String home = '$svgs/bottom_bar/home.svg';
   static const String homeSelected = '$svgs/bottom_bar/home_selected.svg';
   static const String orders = '$svgs/bottom_bar/orders.svg';
@@ -29,4 +33,14 @@ class AssetsConstants {
   static const String shopSelected = '$svgs/bottom_bar/shop_selected.svg';
   static const String user = '$svgs/bottom_bar/user.svg';
   static const String userSelected = '$svgs/bottom_bar/user_selected.svg';
+  static const String bell = '$svgs/bell.svg';
+  static const String plus = '$svgs/plus.svg';
+  static const String minus = '$svgs/minus.svg';
+  static const String heart = '$svgs/heart.svg';
+  static const String cartEmpty = '$svgs/cart_empty.svg';
+  static const String arrowLeft = '$svgs/arrow_left.svg';
+  static const String gift = '$svgs/gift.svg';
+
+  /// Animations
+  static const String locationAnimation = '$animations/location.json';
 }

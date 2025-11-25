@@ -13,7 +13,10 @@ abstract class UserModel with _$UserModel {
     String? phone,
     String? email,
     String? name,
+    String? googleId,
+    String? appleId,
     @Default(false) bool isGuest,
+    // @Default(<dynamic>[]) List<dynamic> addresses,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _UserModel;

@@ -23,7 +23,7 @@ class ApiConstants {
 
   // Products Endpoints
   static const String products = '/products';
-  static String productDetails(String id) => '/products/$id';
+  static const String productDetails = '/products/{id}';
   static const String searchProducts = '/products/search';
   static String productReviews(String id) => '/products/$id/reviews';
   static String addProductReview(String id) => '/products/$id/reviews';
@@ -32,8 +32,8 @@ class ApiConstants {
 
   // Categories Endpoints
   static const String categories = '/categories';
-  static String categoryDetails(String id) => '/categories/$id';
-  static String categoryProducts(String id) => '/categories/$id/products';
+  static const String categoryById = '/categories/{id}';
+  static const String categoryProducts = '/categories/{id}/products';
 
   // Cart Endpoints
   static const String cart = '/cart';
@@ -46,7 +46,7 @@ class ApiConstants {
 
   // Wishlist Endpoints
   static const String wishlist = '/wishlist';
-  static const String addToWishlist = '/wishlist/add';
+  static const String wishListItems = '/wishlist/items';
   static String removeFromWishlist(String productId) => '/wishlist/remove/$productId';
   static const String clearWishlist = '/wishlist/clear';
 
