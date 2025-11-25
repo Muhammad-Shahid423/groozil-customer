@@ -7,9 +7,9 @@ part 'auth_response_model.g.dart';
 @freezed
 abstract class AuthResponseModel with _$AuthResponseModel {
   const factory AuthResponseModel({
-    required UserModel user,
     required String accessToken,
     required String refreshToken,
+    @Default(UserModel(id: '')) UserModel user,
   }) = _AuthResponseModel;
 
   factory AuthResponseModel.fromJson(Map<String, dynamic> json) =>

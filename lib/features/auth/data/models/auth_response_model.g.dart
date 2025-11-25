@@ -8,14 +8,16 @@ part of 'auth_response_model.dart';
 
 _AuthResponseModel _$AuthResponseModelFromJson(Map<String, dynamic> json) =>
     _AuthResponseModel(
-      user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
       accessToken: json['accessToken'] as String,
       refreshToken: json['refreshToken'] as String,
+      user: json['user'] == null
+          ? const UserModel(id: '')
+          : UserModel.fromJson(json['user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$AuthResponseModelToJson(_AuthResponseModel instance) =>
     <String, dynamic>{
-      'user': instance.user,
       'accessToken': instance.accessToken,
       'refreshToken': instance.refreshToken,
+      'user': instance.user,
     };

@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:groozil_app/generated/locale_keys.g.dart';
 import 'package:groozil_app/shared/theme/app_colors.dart';
 import 'package:groozil_app/shared/theme/app_sizes.dart';
 import 'package:groozil_app/shared/theme/app_text_styles.dart';
@@ -35,7 +37,7 @@ class SearchField extends StatelessWidget {
         color: AppColors.textPrimary,
       ),
       decoration: InputDecoration(
-        hintText: hint ?? 'Search...',
+        hintText: hint ?? context.tr(LocaleKeys.common_search),
         prefixIcon: Icon(
           Icons.search,
           color: AppColors.textSecondary,

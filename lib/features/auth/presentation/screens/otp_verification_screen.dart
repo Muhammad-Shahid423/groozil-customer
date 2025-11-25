@@ -99,7 +99,6 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
           if (mounted) {
             // Check if user has completed their profile (has a name)
             if (user.name.isNullOrEmpty) {
-              // Navigate to complete profile screen with login method info
               // Pass which field is missing (phone or email)
               final missingField = user.phone.isNullOrEmpty ? 'phone' : 'email';
               NavigationService.goTo('${RouteNames.profileSetup}?type=$missingField');

@@ -194,7 +194,7 @@ class _CompleteProfileScreenState extends ConsumerState<CompleteProfileScreen> {
                               enabled: !isLoading,
                             ),
                             AppSizes.spaceL.hBox,
-                            if (_isEmailLogin)
+                            if (!_isEmailLogin)
                               AppTextField(
                                 controller: _phoneController,
                                 label: context.tr(LocaleKeys.auth_phone),

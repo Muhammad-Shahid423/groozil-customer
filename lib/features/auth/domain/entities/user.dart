@@ -13,6 +13,8 @@ abstract class User with _$User {
     String? phone,
     String? email,
     String? name,
+    String? googleId,
+    String? appleId,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _User;

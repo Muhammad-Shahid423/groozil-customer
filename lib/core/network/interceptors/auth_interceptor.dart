@@ -52,21 +52,27 @@ class AuthInterceptor extends Interceptor {
     if (err.response?.statusCode == 401) {
       final requestPath = err.requestOptions.path;
       
+      debugPrint('⚠️ 401 Unauthorized on: $requestPath');
+      
       // Don't auto-redirect for OTP verification or initial auth endpoints
       // Let the UI handle these errors with proper feedback
       if (_isAuthRelatedEndpoint(requestPath)) {
+        debugPrint('🔐 Auth-related endpoint, skipping token refresh');
         return handler.next(err);
       }
 
       final refreshToken = _storageService.getRefreshToken();
 
       if (refreshToken != null && refreshToken.isNotEmpty) {
+        debugPrint('🔄 Found refresh token, attempting refresh...');
+        
         // Try to refresh token
         final newToken = await _refreshToken(refreshToken);
 
         if (newToken != null) {
+          debugPrint('✅ Token refresh successful, retrying original request');
+          
           // Update token in storage
-
           await _storageService.setAccessToken(newToken);
 
           // Retry the original request with new token
@@ -75,14 +81,20 @@ class AuthInterceptor extends Interceptor {
 
           try {
             final response = await Dio().fetch<dynamic>(requestOptions);
+            debugPrint('✅ Original request succeeded after token refresh');
             return handler.resolve(response);
           } on DioException catch (e) {
-            debugPrint('🔴 Retry request failed: $e');
+            debugPrint('🔴 Retry request failed after token refresh: ${e.message}');
           }
+        } else {
+          debugPrint('🔴 Token refresh returned null');
         }
+      } else {
+        debugPrint('🔴 No refresh token available');
       }
 
       // If refresh fails, clear tokens and redirect to login
+      debugPrint('🚪 Clearing auth data and redirecting to login');
       await _clearAuthData();
       NavigationService.goToAuthOptions();
     }
@@ -92,30 +104,66 @@ class AuthInterceptor extends Interceptor {
 
   Future<String?> _refreshToken(String refreshToken) async {
     try {
+      debugPrint('🔄 Attempting to refresh token...');
+      
       final dio = Dio(
-        BaseOptions(baseUrl: ApiConstants.apiBaseUrl),
+        BaseOptions(
+          baseUrl: ApiConstants.apiBaseUrl,
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
       );
 
-      final response = await dio.post<dynamic>(
-        '/auth/refresh',
+      final response = await dio.post<Map<String, dynamic>>(
+        ApiConstants.refreshToken,
         data: {'refreshToken': refreshToken},
       );
 
-      if (response.statusCode == 200) {
-        final data = response.data as Map<String, dynamic>;
+      debugPrint('🔄 Refresh response status: ${response.statusCode}');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = response.data;
+        
+        if (data == null) {
+          debugPrint('🔴 Refresh failed: Response data is null');
+          return null;
+        }
+
+        // Handle ApiResponse format: { success, data, message }
         final apiData = data['data'] as Map<String, dynamic>?;
+        
+        if (apiData == null) {
+          debugPrint('🔴 Refresh failed: data field is null');
+          return null;
+        }
 
-        final newAccessToken = apiData?['accessToken'] as String?;
-        final newRefreshToken = apiData?['refreshToken'] as String?;
+        final newAccessToken = apiData['accessToken'] as String?;
+        final newRefreshToken = apiData['refreshToken'] as String?;
 
-        if (newRefreshToken != null) {
+        if (newAccessToken == null) {
+          debugPrint('🔴 Refresh failed: accessToken is null');
+          return null;
+        }
+
+        debugPrint('✅ Token refreshed successfully');
+
+        // Update refresh token if provided
+        if (newRefreshToken != null && newRefreshToken.isNotEmpty) {
           await _storageService.setRefreshToken(newRefreshToken);
+          debugPrint('✅ Refresh token updated');
         }
 
         return newAccessToken;
       }
+      
+      debugPrint('🔴 Refresh failed: Invalid status code ${response.statusCode}');
     } on DioException catch (e) {
-      debugPrint('🔴 Token refresh failed: $e');
+      debugPrint('🔴 Token refresh failed: ${e.message}');
+      debugPrint('🔴 Response: ${e.response?.data}');
+    } catch (e) {
+      debugPrint('🔴 Token refresh error: $e');
     }
     return null;
   }

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AuthResponseModel {
 
- UserModel get user; String get accessToken; String get refreshToken;
+ String get accessToken; String get refreshToken; UserModel get user;
 /// Create a copy of AuthResponseModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AuthResponseModelCopyWith<AuthResponseModel> get copyWith => _$AuthResponseMode
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthResponseModel&&(identical(other.user, user) || other.user == user)&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthResponseModel&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken)&&(identical(other.user, user) || other.user == user));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,user,accessToken,refreshToken);
+int get hashCode => Object.hash(runtimeType,accessToken,refreshToken,user);
 
 @override
 String toString() {
-  return 'AuthResponseModel(user: $user, accessToken: $accessToken, refreshToken: $refreshToken)';
+  return 'AuthResponseModel(accessToken: $accessToken, refreshToken: $refreshToken, user: $user)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $AuthResponseModelCopyWith<$Res>  {
   factory $AuthResponseModelCopyWith(AuthResponseModel value, $Res Function(AuthResponseModel) _then) = _$AuthResponseModelCopyWithImpl;
 @useResult
 $Res call({
- UserModel user, String accessToken, String refreshToken
+ String accessToken, String refreshToken, UserModel user
 });
 
 
@@ -65,12 +65,12 @@ class _$AuthResponseModelCopyWithImpl<$Res>
 
 /// Create a copy of AuthResponseModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? user = null,Object? accessToken = null,Object? refreshToken = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? accessToken = null,Object? refreshToken = null,Object? user = null,}) {
   return _then(_self.copyWith(
-user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as UserModel,accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
+accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
 as String,refreshToken: null == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
-as String,
+as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as UserModel,
   ));
 }
 /// Create a copy of AuthResponseModel
@@ -164,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( UserModel user,  String accessToken,  String refreshToken)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String accessToken,  String refreshToken,  UserModel user)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AuthResponseModel() when $default != null:
-return $default(_that.user,_that.accessToken,_that.refreshToken);case _:
+return $default(_that.accessToken,_that.refreshToken,_that.user);case _:
   return orElse();
 
 }
@@ -185,10 +185,10 @@ return $default(_that.user,_that.accessToken,_that.refreshToken);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( UserModel user,  String accessToken,  String refreshToken)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String accessToken,  String refreshToken,  UserModel user)  $default,) {final _that = this;
 switch (_that) {
 case _AuthResponseModel():
-return $default(_that.user,_that.accessToken,_that.refreshToken);case _:
+return $default(_that.accessToken,_that.refreshToken,_that.user);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -205,10 +205,10 @@ return $default(_that.user,_that.accessToken,_that.refreshToken);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( UserModel user,  String accessToken,  String refreshToken)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String accessToken,  String refreshToken,  UserModel user)?  $default,) {final _that = this;
 switch (_that) {
 case _AuthResponseModel() when $default != null:
-return $default(_that.user,_that.accessToken,_that.refreshToken);case _:
+return $default(_that.accessToken,_that.refreshToken,_that.user);case _:
   return null;
 
 }
@@ -220,12 +220,12 @@ return $default(_that.user,_that.accessToken,_that.refreshToken);case _:
 @JsonSerializable()
 
 class _AuthResponseModel implements AuthResponseModel {
-  const _AuthResponseModel({required this.user, required this.accessToken, required this.refreshToken});
+  const _AuthResponseModel({required this.accessToken, required this.refreshToken, this.user = const UserModel(id: '')});
   factory _AuthResponseModel.fromJson(Map<String, dynamic> json) => _$AuthResponseModelFromJson(json);
 
-@override final  UserModel user;
 @override final  String accessToken;
 @override final  String refreshToken;
+@override@JsonKey() final  UserModel user;
 
 /// Create a copy of AuthResponseModel
 /// with the given fields replaced by the non-null parameter values.
@@ -240,16 +240,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthResponseModel&&(identical(other.user, user) || other.user == user)&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthResponseModel&&(identical(other.accessToken, accessToken) || other.accessToken == accessToken)&&(identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken)&&(identical(other.user, user) || other.user == user));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,user,accessToken,refreshToken);
+int get hashCode => Object.hash(runtimeType,accessToken,refreshToken,user);
 
 @override
 String toString() {
-  return 'AuthResponseModel(user: $user, accessToken: $accessToken, refreshToken: $refreshToken)';
+  return 'AuthResponseModel(accessToken: $accessToken, refreshToken: $refreshToken, user: $user)';
 }
 
 
@@ -260,7 +260,7 @@ abstract mixin class _$AuthResponseModelCopyWith<$Res> implements $AuthResponseM
   factory _$AuthResponseModelCopyWith(_AuthResponseModel value, $Res Function(_AuthResponseModel) _then) = __$AuthResponseModelCopyWithImpl;
 @override @useResult
 $Res call({
- UserModel user, String accessToken, String refreshToken
+ String accessToken, String refreshToken, UserModel user
 });
 
 
@@ -277,12 +277,12 @@ class __$AuthResponseModelCopyWithImpl<$Res>
 
 /// Create a copy of AuthResponseModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? user = null,Object? accessToken = null,Object? refreshToken = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? accessToken = null,Object? refreshToken = null,Object? user = null,}) {
   return _then(_AuthResponseModel(
-user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
-as UserModel,accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
+accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
 as String,refreshToken: null == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
-as String,
+as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as UserModel,
   ));
 }
 

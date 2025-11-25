@@ -1,17 +1,27 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:groozil_app/core/di/injection.dart';
 import 'package:groozil_app/core/extensions/type_checkers.dart';
 import 'package:groozil_app/core/routing/navigation_service.dart';
 import 'package:groozil_app/core/routing/route_names.dart';
 import 'package:groozil_app/core/services/storage/storage_service.dart';
+import 'package:groozil_app/core/shell/main_shell.dart';
+import 'package:groozil_app/features/address/domain/entities/address.dart';
 import 'package:groozil_app/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:groozil_app/features/auth/presentation/screens/auth_options_screen.dart';
 import 'package:groozil_app/features/auth/presentation/screens/complete_profile_screen.dart';
 import 'package:groozil_app/features/auth/presentation/screens/email_login_screen.dart';
 import 'package:groozil_app/features/auth/presentation/screens/otp_verification_screen.dart';
 import 'package:groozil_app/features/auth/presentation/screens/phone_login_screen.dart';
+import 'package:groozil_app/features/address/presentation/screens/addresses_screen.dart';
+import 'package:groozil_app/features/address/presentation/screens/add_edit_address_screen.dart';
+import 'package:groozil_app/features/address/presentation/screens/map_location_picker_screen.dart';
+import 'package:groozil_app/features/home/presentation/screens/home_screen.dart';
 import 'package:groozil_app/features/onboarding/presentation/screens/onboarding_screen.dart';
+import 'package:groozil_app/features/orders/presentation/screens/orders_screen.dart';
+import 'package:groozil_app/features/product_details/presentation/screens/product_details_screen.dart';
+import 'package:groozil_app/features/profile/presentation/screens/profile_screen.dart';
+import 'package:groozil_app/features/shop/presentation/screens/shop_screen.dart';
+import 'package:groozil_app/features/wishlist/presentation/screens/wishlist_screen.dart';
 import 'package:groozil_app/shared/screens/splash_screen.dart';
 import 'package:groozil_app/shared/widgets/error/error_screen.dart';
 import 'package:injectable/injectable.dart';
@@ -81,22 +91,18 @@ class AppRouter {
     _router.dispose();
   }
 
-  List<GoRoute> _buildRoutes() {
+  List<RouteBase> _buildRoutes() {
     return [
-      // Splash Screen
       GoRoute(
         path: RouteNames.splash,
         name: RouteNames.splash,
         builder: (context, state) => const SplashScreen(),
       ),
-
-      // Onboarding
       GoRoute(
         path: RouteNames.onboarding,
         name: RouteNames.onboarding,
         builder: (context, state) => const OnboardingScreen(),
       ),
-
       GoRoute(
         path: RouteNames.authOptions,
         builder: (context, state) => const AuthOptionsScreen(),
@@ -110,16 +116,10 @@ class AppRouter {
         builder: (context, state) {
           final phone = state.uri.queryParameters['phone'];
           final email = state.uri.queryParameters['email'];
-          return OtpVerificationScreen(
-            phone: phone,
-            email: email,
-          );
+          return OtpVerificationScreen(phone: phone, email: email);
         },
       ),
-      GoRoute(
-        path: RouteNames.emailInput,
-        builder: (context, state) => const EmailLoginScreen(),
-      ),
+      GoRoute(path: RouteNames.emailInput, builder: (context, state) => const EmailLoginScreen()),
       GoRoute(
         path: RouteNames.profileSetup,
         builder: (context, state) {
@@ -127,24 +127,94 @@ class AppRouter {
           return CompleteProfileScreen(loginType: type);
         },
       ),
-
       // Main App Routes
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) => MainShell(navigationShell: navigationShell),
+        branches: <StatefulShellBranch>[
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
+                path: RouteNames.home,
+                builder: (context, state) => const HomeScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
+                path: RouteNames.shop,
+                builder: (context, state) {
+                  final categoryId = state.uri.queryParameters['categoryId'];
+                  return ShopScreen(categoryId: categoryId);
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
+                path: RouteNames.orders,
+                builder: (context, state) => const OrdersScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
+                path: RouteNames.profile,
+                builder: (context, state) => const ProfileScreen(),
+              ),
+            ],
+          ),
+        ],
+      ),
       GoRoute(
-        path: RouteNames.home,
-        name: RouteNames.home,
-        builder: (context, state) => const HomeScreen(),
+        path: '${RouteNames.productDetails}/:productId',
+        builder: (context, state) {
+          final productId = state.pathParameters['productId']!;
+          final product = state.extra; // Can be Product object or null
+          return ProductDetailsScreen(
+            productId: productId,
+            cachedProduct: product,
+          );
+        },
+      ),
+      GoRoute(
+        path: RouteNames.wishlist,
+        builder: (context, state) => const WishlistScreen(),
+      ),
+      // Address Routes
+      GoRoute(
+        path: RouteNames.addresses,
+        builder: (context, state) => const AddressesScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.addAddress,
+        builder: (context, state) => const AddEditAddressScreen(),
+      ),
+      GoRoute(
+        path: '${RouteNames.editAddress}/:addressId',
+        builder: (context, state) {
+          final addressId = state.pathParameters['addressId'];
+          final address = state.extra as Address?;
+          return AddEditAddressScreen(
+            addressId: addressId,
+            address: address,
+          );
+        },
+      ),
+      GoRoute(
+        path: RouteNames.selectLocation,
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          final lat = extra?['latitude'] as double?;
+          final lng = extra?['longitude'] as double?;
+          return MapLocationPickerScreen(
+            initialLatitude: lat,
+            initialLongitude: lng,
+          );
+        },
       ),
     ];
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Home Screen')),
-    );
   }
 }

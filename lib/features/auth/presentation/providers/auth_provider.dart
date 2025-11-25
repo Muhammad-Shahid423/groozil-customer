@@ -155,8 +155,8 @@ class AuthProvider extends _$AuthProvider {
           (failure) {
         state = AuthState.error(failure.message);
       },
-          (authResponse) {
-        state = AuthState.authenticated(authResponse.user);
+          (user) {
+        state = AuthState.authenticated(user);
       },
     );
   }

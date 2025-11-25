@@ -1,8 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:groozil_app/core/network/api_constants.dart';
 import 'package:groozil_app/core/network/models/api_response.dart';
+import 'package:groozil_app/features/address/data/models/address_model.dart';
 import 'package:groozil_app/features/auth/data/models/auth_response_model.dart';
 import 'package:groozil_app/features/auth/data/models/user_model.dart';
+import 'package:groozil_app/features/home/data/models/banner_model.dart';
+import 'package:groozil_app/features/category/data/models/category_model.dart';
+import 'package:groozil_app/features/shop/data/models/product_model.dart';
+import 'package:groozil_app/features/wishlist/data/models/wishlist_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api_client.g.dart';
@@ -22,8 +27,8 @@ abstract class ApiClient {
   @POST(ApiConstants.verifyOtp)
   Future<ApiResponse<AuthResponseModel>> verifyOtp(@Body() Map<String, dynamic> body);
 
-  // @POST('/auth/refresh')
-  // Future<ApiResponse<Map<String, dynamic>>> refreshToken(@Body() Map<String, dynamic> body);
+  @POST(ApiConstants.refreshToken)
+  Future<ApiResponse<AuthResponseModel>> refreshToken(@Body() Map<String, dynamic> body);
 
   @POST(ApiConstants.logout)
   Future<ApiResponse<dynamic>> logout();
@@ -39,34 +44,20 @@ abstract class ApiClient {
   Future<ApiResponse<UserModel>> getProfile();
 
   @PUT(ApiConstants.profile)
-  Future<ApiResponse<AuthResponseModel>> updateProfile(@Body() Map<String, dynamic> body);
+  Future<ApiResponse<UserModel>> updateProfile(@Body() Map<String, dynamic> body);
 
   // @DELETE('/user/account')
   // Future<ApiResponse<dynamic>> deleteAccount();
   //
   // // ==================== PRODUCTS ENDPOINTS ====================
-  // @GET('/products')
-  // Future<ApiResponse<List<dynamic>>> getProducts(
-  //     @Query('page') int page,
-  //     @Query('limit') int limit,
-  //     @Query('category') String? category,
-  //     @Query('search') String? search,
-  //     @Query('sort') String? sort,
-  //     @Query('minPrice') double? minPrice,
-  //     @Query('maxPrice') double? maxPrice,
-  //     );
-  //
-  // @GET('/products/{id}')
-  // Future<ApiResponse<Map<String, dynamic>>> getProductById(
-  //     @Path('id') String id,
-  //     );
-  //
-  // @GET('/products/search')
-  // Future<ApiResponse<List<dynamic>>> searchProducts(
-  //     @Query('q') String query,
-  //     @Query('page') int page,
-  //     @Query('limit') int limit,
-  //     );
+  @GET(ApiConstants.products)
+  Future<ApiResponse<List<ProductModel>>> getProducts(@Queries() Map<String, dynamic> queries);
+
+  @GET(ApiConstants.productDetails)
+  Future<ApiResponse<ProductModel>> getProductById(@Path('id') String id);
+
+  @GET(ApiConstants.searchProducts)
+  Future<ApiResponse<List<ProductModel>>> searchProducts(@Queries() Map<String, dynamic> queries);
   //
   // @GET('/products/{id}/reviews')
   // Future<ApiResponse<List<dynamic>>> getProductReviews(
@@ -81,32 +72,27 @@ abstract class ApiClient {
   //     @Body() Map<String, dynamic> body,
   //     );
   //
-  // @GET('/products/featured')
-  // Future<ApiResponse<List<dynamic>>> getFeaturedProducts(
-  //     @Query('limit') int limit,
-  //     );
+  @GET(ApiConstants.featuredProducts)
+  Future<ApiResponse<List<ProductModel>>> getFeaturedProducts(@Queries() Map<String, dynamic> queries);
   //
   // @GET('/products/recommended')
   // Future<ApiResponse<List<dynamic>>> getRecommendedProducts(
   //     @Query('limit') int limit,
   //     );
-  //
-  // // ==================== CATEGORIES ENDPOINTS ====================
-  // @GET('/categories')
-  // Future<ApiResponse<List<dynamic>>> getCategories();
-  //
-  // @GET('/categories/{id}')
-  // Future<ApiResponse<Map<String, dynamic>>> getCategoryById(
-  //     @Path('id') String id,
-  //     );
-  //
-  // @GET('/categories/{id}/products')
-  // Future<ApiResponse<List<dynamic>>> getCategoryProducts(
-  //     @Path('id') String id,
-  //     @Query('page') int page,
-  //     @Query('limit') int limit,
-  //     );
-  //
+
+  // ==================== CATEGORIES ENDPOINTS ====================
+  @GET(ApiConstants.categories)
+  Future<ApiResponse<List<CategoryModel>>> getCategories();
+
+  @GET(ApiConstants.categoryById)
+  Future<ApiResponse<CategoryModel>> getCategoryById(@Path('id') String id);
+
+  @GET(ApiConstants.categoryProducts)
+  Future<ApiResponse<List<ProductModel>>> getCategoryProducts(
+    @Path('id') String id,
+    @Queries() Map<String, dynamic> queries
+  );
+
   // // ==================== CART ENDPOINTS ====================
   // @GET('/cart')
   // Future<ApiResponse<Map<String, dynamic>>> getCart();
@@ -136,21 +122,37 @@ abstract class ApiClient {
   // Future<ApiResponse<Map<String, dynamic>>> removeCoupon();
   //
   // // ==================== WISHLIST ENDPOINTS ====================
-  // @GET('/wishlist')
-  // Future<ApiResponse<List<dynamic>>> getWishlist(
-  //     @Query('page') int page,
-  //     @Query('limit') int limit,
-  //     );
-  //
-  // @POST('/wishlist/add')
-  // Future<ApiResponse<dynamic>> addToWishlist(
-  //     @Body() Map<String, dynamic> body,
-  //     );
-  //
-  // @DELETE('/wishlist/remove/{productId}')
-  // Future<ApiResponse<dynamic>> removeFromWishlist(
-  //     @Path('productId') String productId,
-  //     );
+  @GET(ApiConstants.wishlist)
+  Future<ApiResponse<WishlistModel>> getWishlist();
+
+  @POST(ApiConstants.wishListItems)
+  Future<ApiResponse<dynamic>> addToWishlist(@Body() Map<String, dynamic> body);
+
+  @DELETE('${ApiConstants.wishListItems}/{productId}')
+  Future<ApiResponse<dynamic>> removeFromWishlist(@Path('productId') String productId);
+
+  // ==================== ADDRESS ENDPOINTS ====================
+  @GET(ApiConstants.addresses)
+  Future<ApiResponse<List<AddressModel>>> getAddresses();
+
+  @GET('${ApiConstants.addresses}/{id}')
+  Future<ApiResponse<AddressModel>> getAddressById(@Path('id') String id);
+
+  @POST(ApiConstants.addAddress)
+  Future<ApiResponse<AddressModel>> addAddress(@Body() Map<String, dynamic> body);
+
+  @PUT('${ApiConstants.addresses}/{id}')
+  Future<ApiResponse<AddressModel>> updateAddress(
+    @Path('id') String id,
+    @Body() Map<String, dynamic> body,
+  );
+
+  @DELETE('${ApiConstants.addresses}/{id}')
+  Future<ApiResponse<dynamic>> deleteAddress(@Path('id') String id);
+
+  @PUT('${ApiConstants.addresses}/{id}/set-default')
+  Future<ApiResponse<dynamic>> setDefaultAddress(@Path('id') String id);
+
   //
   // @DELETE('/wishlist/clear')
   // Future<ApiResponse<dynamic>> clearWishlist();
@@ -246,13 +248,12 @@ abstract class ApiClient {
   // Future<ApiResponse<dynamic>> updateFcmToken(
   //     @Body() Map<String, dynamic> body,
   //     );
-  //
-  // // ==================== BANNERS ENDPOINTS ====================
-  // @GET('/banners')
-  // Future<ApiResponse<List<dynamic>>> getBanners(
-  //     @Query('active') bool? active,
-  //     );
-  //
+
+  // ==================== BANNERS ENDPOINTS ====================
+  @GET(ApiConstants.banners)
+  // Future<ApiResponse<List<BannerModel>>> getBanners(@Query('active') bool? active);
+  Future<ApiResponse<List<BannerModel>>> getBanners(@Queries() Map<String, dynamic> queries);
+
   // @GET('/banners/{id}')
   // Future<ApiResponse<Map<String, dynamic>>> getBannerById(@Path('id') String id);
   //
