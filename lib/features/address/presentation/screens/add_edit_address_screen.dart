@@ -20,11 +20,19 @@ class AddEditAddressScreen extends ConsumerStatefulWidget {
   const AddEditAddressScreen({
     this.addressId,
     this.address,
+    this.latitude,
+    this.longitude,
+    this.shortAddress,
+    this.fullAddress,
     super.key,
   });
 
   final String? addressId;
   final Address? address;
+  final double? latitude;
+  final double? longitude;
+  final String? shortAddress;
+  final String? fullAddress;
 
   @override
   ConsumerState<AddEditAddressScreen> createState() =>
@@ -55,6 +63,10 @@ class _AddEditAddressScreenState extends ConsumerState<AddEditAddressScreen> {
   bool _isLoading = false;
   bool _isSaving = false;
 
+  // Display address
+  String _displayTitle = '';
+  String _displaySubtitle = '';
+
   final List<String> _labelOptions = ['Home', 'Work', 'Office', 'Hotel', 'Other'];
 
   @override
@@ -64,10 +76,12 @@ class _AddEditAddressScreenState extends ConsumerState<AddEditAddressScreen> {
   }
 
   Future<void> _initializeForm() async {
+    setState(() => _isLoading = true);
+
     if (widget.address != null) {
-      // Edit mode - populate fields with existing address
+      // Edit mode - populate from existing address
       final address = widget.address!;
-      
+
       setState(() {
         _selectedLabel = address.label;
         _streetController.text = address.street;
@@ -80,15 +94,56 @@ class _AddEditAddressScreenState extends ConsumerState<AddEditAddressScreen> {
         _latitude = address.latitude;
         _longitude = address.longitude;
         _isDefault = address.isDefault;
+        _displayTitle = address.street.isNotEmpty
+            ? address.street
+            : address.district;
+        _displaySubtitle = [address.district, address.city]
+            .where((s) => s.isNotEmpty)
+            .join(', ');
       });
 
-      // Update map camera
+      await _mapController?.animateCamera(
+        CameraUpdate.newLatLngZoom(LatLng(_latitude, _longitude), 15),
+      );
+    } else if (widget.latitude != null && widget.longitude != null) {
+      // Coming from map picker
+      setState(() {
+        _latitude = widget.latitude!;
+        _longitude = widget.longitude!;
+        _displayTitle = widget.shortAddress ?? '';
+        _displaySubtitle = widget.fullAddress ?? '';
+      });
+
+      // Try to parse the address info
+      if (widget.fullAddress != null && widget.fullAddress!.isNotEmpty) {
+        await _parseFullAddress(widget.fullAddress!);
+      } else {
+        await _updateAddressFromCoordinates(_latitude, _longitude);
+      }
+
       await _mapController?.animateCamera(
         CameraUpdate.newLatLngZoom(LatLng(_latitude, _longitude), 15),
       );
     } else {
-      // Add mode - get current location
+      // New address - use current location
       await _loadCurrentLocation();
+    }
+
+    setState(() => _isLoading = false);
+  }
+
+  Future<void> _parseFullAddress(String fullAddress) async {
+    // Try to extract street, district, city from fullAddress
+    final parts = fullAddress.split(',').map((s) => s.trim()).toList();
+    
+    if (parts.isNotEmpty) {
+      _streetController.text = parts.first;
+      if (parts.length > 1) {
+        _districtController.text = parts[1];
+      }
+      if (parts.length > 2) {
+        _cityController.text = parts[2];
+      }
     }
   }
 
@@ -126,6 +181,12 @@ class _AddEditAddressScreenState extends ConsumerState<AddEditAddressScreen> {
       _streetController.text = address['street'] ?? '';
       _districtController.text = address['district'] ?? '';
       _cityController.text = address['city'] ?? '';
+      _displayTitle = address['street']?.isNotEmpty == true
+          ? address['street']!
+          : address['district'] ?? '';
+      _displaySubtitle = [address['district'], address['city']]
+          .where((s) => s?.isNotEmpty == true)
+          .join(', ');
     });
   }
 
@@ -135,17 +196,25 @@ class _AddEditAddressScreenState extends ConsumerState<AddEditAddressScreen> {
       _longitude,
     );
 
-    if (result != null) {
+    if (result != null && mounted) {
       final lat = result['latitude'] as double?;
       final lng = result['longitude'] as double?;
+      final shortAddr = result['shortAddress'] as String?;
+      final fullAddr = result['fullAddress'] as String?;
 
       if (lat != null && lng != null) {
         setState(() {
           _latitude = lat;
           _longitude = lng;
+          _displayTitle = shortAddr ?? '';
+          _displaySubtitle = fullAddr ?? '';
         });
 
-        await _updateAddressFromCoordinates(lat, lng);
+        if (fullAddr != null && fullAddr.isNotEmpty) {
+          await _parseFullAddress(fullAddr);
+        } else {
+          await _updateAddressFromCoordinates(lat, lng);
+        }
 
         await _mapController?.animateCamera(
           CameraUpdate.newLatLngZoom(LatLng(lat, lng), 15),
@@ -226,57 +295,77 @@ class _AddEditAddressScreenState extends ConsumerState<AddEditAddressScreen> {
           : SingleChildScrollView(
               child: Column(
                 children: [
-                  // Map View
+                  // Location Summary Card
                   Container(
-                    height: 200.h,
                     color: Colors.white,
-                    child: Stack(
+                    padding: AppSizes.paddingL.padAll,
+                    child: Row(
                       children: [
-                        GoogleMap(
-                          initialCameraPosition: CameraPosition(
-                            target: LatLng(_latitude, _longitude),
-                            zoom: 15,
+                        Container(
+                          width: 40.w,
+                          height: 40.h,
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8.r),
                           ),
-                          onMapCreated: (controller) {
-                            _mapController = controller;
-                          },
-                          markers: {
-                            Marker(
-                              markerId: const MarkerId('selected'),
-                              position: LatLng(_latitude, _longitude),
-                            ),
-                          },
-                          myLocationEnabled: false,
-                          zoomControlsEnabled: false,
-                          scrollGesturesEnabled: false,
-                          zoomGesturesEnabled: false,
-                          tiltGesturesEnabled: false,
-                          rotateGesturesEnabled: false,
+                          child: Icon(
+                            Icons.location_on,
+                            color: AppColors.primary,
+                            size: 24.sp,
+                          ),
                         ),
-                        Positioned(
-                          top: 16.h,
-                          right: 16.w,
-                          child: ElevatedButton(
-                            onPressed: _openMapPicker,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              foregroundColor: AppColors.primary,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 16.w,
-                                vertical: 8.h,
+                        SizedBox(width: 12.w),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _displayTitle.isNotEmpty
+                                    ? _displayTitle
+                                    : LocaleKeys.address_location.tr(),
+                                style:
+                                    AppTextStyles.light.semiBold14_17?.copyWith(
+                                  color: AppColors.textPrimary,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
+                              if (_displaySubtitle.isNotEmpty) ...[
+                                SizedBox(height: 4.h),
+                                Text(
+                                  _displaySubtitle,
+                                  style:
+                                      AppTextStyles.light.regular12_15?.copyWith(
+                                    color: AppColors.textSecondary,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: _openMapPicker,
+                          style: TextButton.styleFrom(
+                            foregroundColor: AppColors.primary,
+                          ),
+                          child: Text(
+                            'Change',
+                            style: AppTextStyles.light.semiBold14_17?.copyWith(
+                              color: AppColors.primary,
                             ),
-                            child: const Text('Change'),
                           ),
                         ),
                       ],
                     ),
                   ),
 
+                  SizedBox(height: 8.h),
+
                   // Form
                   Container(
                     color: Colors.white,
-                    margin: EdgeInsets.only(top: 8.h),
                     padding: AppSizes.paddingL.padAll,
                     child: Form(
                       key: _formKey,
@@ -403,7 +492,7 @@ class _AddEditAddressScreenState extends ConsumerState<AddEditAddressScreen> {
 
                           // Additional Details
                           _buildTextField(
-                            label: '${LocaleKeys.address_additional_details.tr()} (${LocaleKeys.common_continue.tr()})',
+                            label: '${LocaleKeys.address_additional_details.tr()} (Optional)',
                             controller: _additionalDetailsController,
                             maxLines: 3,
                           ),

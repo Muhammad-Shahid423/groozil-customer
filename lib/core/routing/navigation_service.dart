@@ -18,9 +18,27 @@ class NavigationService {
   
   // Address routes
   static void goToAddresses() => context.push(RouteNames.addresses);
-  static void goToAddAddress() => context.push(RouteNames.addAddress);
+  
+  static Future<void> goToAddAddress({
+    double? latitude,
+    double? longitude,
+    String? shortAddress,
+    String? fullAddress,
+  }) async {
+    await context.push(
+      RouteNames.addAddress,
+      extra: {
+        'latitude': latitude,
+        'longitude': longitude,
+        'shortAddress': shortAddress,
+        'fullAddress': fullAddress,
+      },
+    );
+  }
+
   static void goToEditAddress(String id, {Object? address}) => 
       context.push('${RouteNames.editAddress}/$id', extra: address);
+  
   static Future<Map<String, dynamic>?> goToSelectLocation(
     double? initialLat,
     double? initialLng,

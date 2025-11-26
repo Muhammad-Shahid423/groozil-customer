@@ -29,6 +29,8 @@ abstract class  LocaleKeys {
   static const common_retry = 'common.retry';
   static const common_refresh = 'common.refresh';
   static const common_continue = 'common.continue';
+  static const common_change = 'common.change';
+  static const common_optional = 'common.optional';
   static const common = 'common';
   static const validation_required = 'validation.required';
   static const validation_invalid_email = 'validation.invalid_email';
@@ -151,6 +153,7 @@ abstract class  LocaleKeys {
   static const address_failed_to_update_address = 'address.failed_to_update_address';
   static const address_failed_to_delete_address = 'address.failed_to_delete_address';
   static const address_failed_to_set_default = 'address.failed_to_set_default';
+  static const address_failed_to_get_location = 'address.failed_to_get_location';
   static const address_error_loading_addresses = 'address.error_loading_addresses';
   static const address_location = 'address.location';
   static const address_use_current_location = 'address.use_current_location';
