@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:groozil_app/core/extensions/spacing_extensions.dart';
 import 'package:groozil_app/core/routing/navigation_service.dart';
+import 'package:groozil_app/core/services/map_service.dart';
 import 'package:groozil_app/features/address/presentation/providers/address_notifier.dart';
 import 'package:groozil_app/features/address/presentation/providers/address_state.dart';
 import 'package:groozil_app/features/address/presentation/widgets/address_item.dart';
@@ -13,11 +14,85 @@ import 'package:groozil_app/shared/theme/app_colors.dart';
 import 'package:groozil_app/shared/theme/app_sizes.dart';
 import 'package:groozil_app/shared/theme/app_text_styles.dart';
 
-class AddressBottomSheet extends ConsumerWidget {
+class AddressBottomSheet extends ConsumerStatefulWidget {
   const AddressBottomSheet({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AddressBottomSheet> createState() =>
+      _AddressBottomSheetState();
+}
+
+class _AddressBottomSheetState extends ConsumerState<AddressBottomSheet> {
+  bool _isLocatingUser = false;
+
+  Future<void> _locateMe() async {
+    setState(() => _isLocatingUser = true);
+
+    try {
+      final position = await MapService.getCurrentLocation();
+
+      if (position != null && mounted) {
+        // Open the map picker with current location
+        final result = await NavigationService.goToSelectLocation(
+          position.latitude,
+          position.longitude,
+        );
+
+        if (result != null && mounted) {
+          // Open add address screen with the location
+          await _openAddAddressWithLocation(result);
+        }
+      }
+    } catch (e) {
+      debugPrint('Error locating user: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(LocaleKeys.address_failed_to_get_location.tr()),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLocatingUser = false);
+      }
+    }
+  }
+
+  Future<void> _openNewAddress() async {
+    // Open map picker first
+    final result = await NavigationService.goToSelectLocation(null, null);
+
+    if (result != null && mounted) {
+      await _openAddAddressWithLocation(result);
+    }
+  }
+
+  Future<void> _openAddAddressWithLocation(
+      Map<String, dynamic> locationData) async {
+    final lat = locationData['latitude'] as double?;
+    final lng = locationData['longitude'] as double?;
+    final shortAddr = locationData['shortAddress'] as String?;
+    final fullAddr = locationData['fullAddress'] as String?;
+
+    if (lat != null && lng != null) {
+      await NavigationService.goToAddAddress(
+        latitude: lat,
+        longitude: lng,
+        shortAddress: shortAddr,
+        fullAddress: fullAddr,
+      );
+
+      // Refresh addresses after adding
+      if (mounted) {
+        await ref.read(addressProvider.notifier).refresh();
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final addressState = ref.watch(addressProvider);
 
     return Container(
@@ -98,14 +173,18 @@ class AddressBottomSheet extends ConsumerWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: AppSizes.paddingL),
             child: OutlinedButton.icon(
-              onPressed: () {
-                // TODO: Implement locate me functionality
-              },
-              icon: Icon(
-                Icons.my_location,
-                size: 20.sp,
-                color: AppColors.primary,
-              ),
+              onPressed: _isLocatingUser ? null : _locateMe,
+              icon: _isLocatingUser
+                  ? SizedBox(
+                      width: 20.w,
+                      height: 20.h,
+                      child: const CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : Icon(
+                      Icons.my_location,
+                      size: 20.sp,
+                      color: AppColors.primary,
+                    ),
               label: Text(
                 LocaleKeys.address_locate_me.tr(),
                 style: AppTextStyles.light.medium14_17?.copyWith(
@@ -134,7 +213,7 @@ class AddressBottomSheet extends ConsumerWidget {
                   ),
                 ),
                 TextButton.icon(
-                  onPressed: NavigationService.goToAddAddress,
+                  onPressed: _openNewAddress,
                   icon: Icon(
                     Icons.add,
                     size: 20.sp,
@@ -177,8 +256,7 @@ class AddressBottomSheet extends ConsumerWidget {
                         await ref
                             .read(addressProvider.notifier)
                             .setDefaultAddress(address.id);
-                        // Navigator.pop(context);
-                      }
+                      },
                     );
                   },
                 );

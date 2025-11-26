@@ -25,7 +25,9 @@
     "clear": "مسح",
     "retry": "إعادة المحاولة",
     "refresh": "تحديث",
-    "continue": "يكمل"
+    "continue": "يكمل",
+    "change": "تغيير",
+    "optional": "اختياري"
   },
   "validation": {
     "required": "هذا الحقل مطلوب",
@@ -156,6 +158,7 @@
     "failed_to_update_address": "فشل في تحديث العنوان",
     "failed_to_delete_address": "فشل في حذف العنوان",
     "failed_to_set_default": "فشل في تعيين العنوان الافتراضي",
+    "failed_to_get_location": "فشل في الحصول على موقعك",
     "error_loading_addresses": "خطأ في تحميل العناوين",
     "location": "الموقع",
     "use_current_location": "استخدام الموقع الحالي"

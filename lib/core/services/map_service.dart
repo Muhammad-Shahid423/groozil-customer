@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class MapService {
   /// Get current location
@@ -14,10 +13,21 @@ class MapService {
         return null;
       }
 
-      // Request location permission
-      final permission = await requestLocationPermission();
-      if (!permission) {
-        debugPrint('❌ Location permission denied');
+      // Check and request location permission
+      LocationPermission permission = await Geolocator.checkPermission();
+      
+      if (permission == LocationPermission.denied) {
+        debugPrint('🔐 Requesting location permission...');
+        permission = await Geolocator.requestPermission();
+        
+        if (permission == LocationPermission.denied) {
+          debugPrint('❌ Location permission denied');
+          return null;
+        }
+      }
+      
+      if (permission == LocationPermission.deniedForever) {
+        debugPrint('❌ Location permissions are permanently denied');
         return null;
       }
 
@@ -35,22 +45,29 @@ class MapService {
     }
   }
 
-  /// Request location permission
-  static Future<bool> requestLocationPermission() async {
+  /// Check if location permission is granted
+  static Future<bool> hasLocationPermission() async {
     try {
-      var status = await Permission.location.status;
-      
-      if (status.isDenied) {
-        debugPrint('🔐 Requesting location permission...');
-        status = await Permission.location.request();
+      final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        return false;
       }
-      
-      final granted = status.isGranted || status.isLimited;
-      debugPrint(granted ? '✅ Location permission granted' : '❌ Location permission denied');
-      
-      return granted;
+
+      final permission = await Geolocator.checkPermission();
+      return permission == LocationPermission.always ||
+          permission == LocationPermission.whileInUse;
     } on Exception catch (e) {
-      debugPrint('🔴 Error requesting location permission: $e');
+      debugPrint('🔴 Error checking location permission: $e');
+      return false;
+    }
+  }
+
+  /// Open app settings to allow user to grant location permission
+  static Future<bool> openLocationSettings() async {
+    try {
+      return await Geolocator.openLocationSettings();
+    } on Exception catch (e) {
+      debugPrint('🔴 Error opening location settings: $e');
       return false;
     }
   }

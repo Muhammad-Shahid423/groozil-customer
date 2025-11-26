@@ -25,7 +25,9 @@
     "clear": "Clear",
     "retry": "Retry",
     "refresh": "Refresh",
-    "continue": "Continue"
+    "continue": "Continue",
+    "change": "Change",
+    "optional": "Optional"
   },
   "validation": {
     "required": "This field is required",
@@ -156,6 +158,7 @@
     "failed_to_update_address": "Failed to update address",
     "failed_to_delete_address": "Failed to delete address",
     "failed_to_set_default": "Failed to set default address",
+    "failed_to_get_location": "Failed to get your location",
     "error_loading_addresses": "Error loading addresses",
     "location": "Location",
     "use_current_location": "Use Current Location"

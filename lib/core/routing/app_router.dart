@@ -190,7 +190,15 @@ class AppRouter {
       ),
       GoRoute(
         path: RouteNames.addAddress,
-        builder: (context, state) => const AddEditAddressScreen(),
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>?;
+          return AddEditAddressScreen(
+            latitude: extra?['latitude'] as double?,
+            longitude: extra?['longitude'] as double?,
+            shortAddress: extra?['shortAddress'] as String?,
+            fullAddress: extra?['fullAddress'] as String?,
+          );
+        },
       ),
       GoRoute(
         path: '${RouteNames.editAddress}/:addressId',
