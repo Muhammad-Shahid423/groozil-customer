@@ -15,6 +15,7 @@ import 'package:groozil_app/features/auth/presentation/screens/complete_profile_
 import 'package:groozil_app/features/auth/presentation/screens/email_login_screen.dart';
 import 'package:groozil_app/features/auth/presentation/screens/otp_verification_screen.dart';
 import 'package:groozil_app/features/auth/presentation/screens/phone_login_screen.dart';
+import 'package:groozil_app/features/home/presentation/screens/featured_products_screen.dart';
 import 'package:groozil_app/features/home/presentation/screens/home_screen.dart';
 import 'package:groozil_app/features/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:groozil_app/features/orders/presentation/screens/orders_screen.dart';
@@ -182,6 +183,10 @@ class AppRouter {
       GoRoute(
         path: RouteNames.wishlist,
         builder: (context, state) => const WishlistScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.featuredProducts,
+        builder: (context, state) => const FeaturedProductsScreen(),
       ),
       // Address Routes
       GoRoute(

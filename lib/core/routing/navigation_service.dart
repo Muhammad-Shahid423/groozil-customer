@@ -13,6 +13,7 @@ class NavigationService {
   static void goToProfile() => context.go(RouteNames.profile);
   static void goToCart() => context.push(RouteNames.cart);
   static void goToWishlist() => context.push(RouteNames.wishlist);
+  static void goToFeaturedProducts() => context.push(RouteNames.featuredProducts);
   static Future<void> goToProductDetails(String id, {Object? product}) => 
       context.push('${RouteNames.productDetails}/$id', extra: product);
   
