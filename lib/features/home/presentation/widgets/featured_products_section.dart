@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:groozil_app/core/extensions/spacing_extensions.dart';
+import 'package:groozil_app/core/routing/navigation_service.dart';
 import 'package:groozil_app/features/home/presentation/providers/featured_products_provider.dart';
 import 'package:groozil_app/features/home/presentation/widgets/title_row.dart';
 import 'package:groozil_app/shared/theme/app_sizes.dart';
@@ -28,8 +29,7 @@ class FeaturedProductsSection extends ConsumerWidget {
           children: [
             TitleRow(
               title: 'Featured Products',
-              // onViewAllPressed: NavigationService.goToFeaturedProducts,
-              onViewAllPressed: () {},
+              onViewAllPressed: NavigationService.goToFeaturedProducts,
             ),
             SizedBox(height: AppSizes.spaceM),
             SizedBox(

@@ -26,6 +26,7 @@ class RouteNames {
   static const String productDetails = '/product-details';
   static const String productReviews = '/product/:id/reviews';
   static const String wishlist = '/wishlist';
+  static const String featuredProducts = '/featured-products';
 
   // Address
   static const String addresses = '/addresses';
