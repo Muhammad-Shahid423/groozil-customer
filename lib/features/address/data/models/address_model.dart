@@ -35,7 +35,7 @@ double _stringToDouble(dynamic value) {
   if (value is num) {
     return value.toDouble();
   }
-  return 0.0;
+  return 0;
 }
 
 String _doubleToString(double value) {

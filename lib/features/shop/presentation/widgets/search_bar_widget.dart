@@ -12,7 +12,7 @@ class SearchBarWidget extends StatefulWidget {
     this.onFilterTap,
     this.filterCount = 0,
   });
-  final Function(String)? onSearch;
+  final void Function(String)? onSearch;
   final VoidCallback? onFilterTap;
   final int filterCount;
 

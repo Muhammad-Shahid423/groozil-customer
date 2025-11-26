@@ -29,7 +29,7 @@ class MapService {
       
       debugPrint('✅ Got location: ${position.latitude}, ${position.longitude}');
       return position;
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('🔴 Error getting current location: $e');
       return null;
     }
@@ -49,7 +49,7 @@ class MapService {
       debugPrint(granted ? '✅ Location permission granted' : '❌ Location permission denied');
       
       return granted;
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('🔴 Error requesting location permission: $e');
       return false;
     }
@@ -84,7 +84,7 @@ class MapService {
       
       debugPrint('✅ Address found: $result');
       return result;
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('🔴 Error getting address from coordinates: $e');
       return {
         'street': '',

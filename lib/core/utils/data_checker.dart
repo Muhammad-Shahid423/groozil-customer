@@ -114,18 +114,18 @@ class DataChecker {
   // ==================== Boolean Checks ====================
 
   /// Check if value is true
-  static bool isTrue(bool? value) {
-    return value == true;
+  static bool isTrue({bool? value}) {
+    return value ?? false;
   }
 
   /// Check if value is false
-  static bool isFalse(bool? value) {
-    return value == false;
+  static bool isFalse({bool? value}) {
+    return value ?? false;
   }
 
   /// Check if value is null or false
-  static bool isNullOrFalse(bool? value) {
-    return value == null || value == false;
+  static bool isNullOrFalse({bool? value}) {
+    return value == null || !value;
   }
 
   // ==================== Email & Phone Checks ====================

@@ -12,7 +12,7 @@ class AppSliderDots extends StatelessWidget {
   });
   final int currentPage;
   final int itemsLength;
-  final Function(int) onTap;
+  final void Function(int) onTap;
 
   @override
   Widget build(BuildContext context) {

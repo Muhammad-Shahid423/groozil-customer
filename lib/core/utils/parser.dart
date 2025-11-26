@@ -142,7 +142,7 @@ class Parser {
     if (value == null) return [];
     if (value is List) {
       return value
-          .map((e) => toIntOrNull(e))
+          .map(toIntOrNull)
           .where((e) => e != null)
           .cast<int>()
           .toList();
@@ -155,7 +155,7 @@ class Parser {
     if (value == null) return [];
     if (value is List) {
       return value
-          .map((e) => toDoubleOrNull(e))
+          .map(toDoubleOrNull)
           .where((e) => e != null)
           .cast<double>()
           .toList();
@@ -186,7 +186,7 @@ class Parser {
   /// Format number as currency (with optional symbol)
   static String toCurrency(
     num? value, {
-    String symbol = '\$',
+    String symbol = r'$',
     int decimalPlaces = 2,
   }) {
     if (value == null) return '$symbol 0.00';
