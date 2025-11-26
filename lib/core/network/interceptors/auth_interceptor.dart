@@ -162,7 +162,7 @@ class AuthInterceptor extends Interceptor {
     } on DioException catch (e) {
       debugPrint('🔴 Token refresh failed: ${e.message}');
       debugPrint('🔴 Response: ${e.response?.data}');
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('🔴 Token refresh error: $e');
     }
     return null;

@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:groozil_app/core/errors/failures.dart';
 
-abstract class UseCase<Type, Params> {
+mixin UseCase<Type, Params> {
   Future<Either<Failure, Type>> call(Params params);
 }
 

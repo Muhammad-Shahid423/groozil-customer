@@ -17,7 +17,7 @@ class CategoryTabs extends StatelessWidget {
   });
   final List<CategoryEntity> categories;
   final String? selectedCategoryId;
-  final Function(String?) onCategorySelected;
+  final void Function(String?) onCategorySelected;
 
   @override
   Widget build(BuildContext context) {

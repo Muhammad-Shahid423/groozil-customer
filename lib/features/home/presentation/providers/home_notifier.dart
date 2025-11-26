@@ -1,6 +1,6 @@
 import 'package:groozil_app/core/usecases/usecase.dart';
-import 'package:groozil_app/features/home/domain/usecases/get_banners_usecase.dart';
 import 'package:groozil_app/features/category/domain/usecases/get_categories_usecase.dart';
+import 'package:groozil_app/features/home/domain/usecases/get_banners_usecase.dart';
 import 'package:groozil_app/features/home/presentation/providers/home_state.dart';
 import 'package:groozil_app/features/home/presentation/providers/home_usecase_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
